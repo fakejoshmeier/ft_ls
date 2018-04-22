@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/19 18:43:29 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/04/21 20:33:33 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	ls_flags(char *str, t_f *f)
 		}
 		f->l_flag = (str[i] == 'l') ? 1 : 0;
 		f->ur_flag = (str[i] == 'R') ? 1 : 0;
-		f->
+		f->a_flag = (str[i] == 'a') ? 1 : 0;
+		f->l_flag = (str[i] == 'l') ? 1 : 0;
+		f->r_flag = (str[i] == 'r') ? 1 : 0;
 	}
 }
 
@@ -47,16 +49,26 @@ int		main(int ac, char *av[])
 	t_ls	*ls;
 	int		i;
 
-	i = -1;
-	if (ac == 1)
-		&ls->curr = opendir(".");
-	else if (ac > 1)
+	i = 0;
+	while (++i < ac)
 	{
-		if (av > 2)
+		if (av[i][0] == '-')
+			ls_flags(av[i], ls->f);
+		else
 		{
-			av[2][0] == '-' ? ls_flags(av[1], ls->f);
-			i = 1;
+			i -= 1;
+			break ;
 		}
-		i = 0;
 	}
+	if (i == ac)
+	{
+		&ls->curr = opendir(".");
+		do_the_thing(&ls);
+	}
+	while (++i < ac)
+	{
+		&ls->curr = opendir(av[i]);
+		do_the_thing(&ls);
+	}
+	return (0);
 }

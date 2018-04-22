@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/19 18:27:07 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/04/21 20:33:35 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef	struct		s_ls;
 	struct s_f		*f;
 	struct dirent	*curr;
 	DIR				*open;
+	int				start;
 }					t_ls;
 
 #endif
