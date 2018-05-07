@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 20:36:46 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/21 22:50:23 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/07 16:56:07 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	do_the_thing(t_ls *ls, char *dir_name)
 		if ls->f->a_flag != 1 && dir->d_name[0] == '.'
 			continue ;
 		stuff_filename_into_list(ls, dir);
-		ls->f->ur_flag == 1 ? checks_if_file_is_directory(ls, dir);
+		ls->f->ur_flag == 1 ? checks_if_file_is_directory(ls, dir) : 0;
 		
 //	A TREE IS AUTO SORTED THAT IS COOL FUCK THE ARRAY
 //  tree
@@ -43,5 +43,5 @@ void	do_the_thing(t_ls *ls, char *dir_name)
 	}
 	closedir(ls->open);
 	print_ls(ls->files);
-	if ()
+//	if ()
 }
