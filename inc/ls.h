@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/21 22:50:18 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/07 23:11:45 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ typedef struct		s_f
 
 typedef struct		s_info
 {
-	char			**files;
-}
+	struct s_info	**files;
+	char			*name;
+	int				folder;
+}					t_info;
 
 typedef	struct		s_ls
 {
