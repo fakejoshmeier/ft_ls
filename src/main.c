@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/21 22:51:45 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/11 21:39:38 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,48 @@ void	ft_error(char *str)
 	exit (0);
 }
 
-void	ls_flags(char *str, t_f *f)
+void	ls_flags(char **av, int *i, t_f *f)
 {
-	char	*poss;
-	int		i;
 	int		j;
 
-	poss = "ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1";
-	i = 0;
-	while (str[++i] && str[i] != '\n')
+	j = -1;
+	if (av[*i][0] == '-')
 	{
-		j = -1;
-		while (poss[++j] && poss[j] != str[i])
-			;
-		if (j == strlen(poss))
+		while (av[*i][++j])
 		{
-			ft_printf("ft_ls: illegal option -- %c\n", str[i]);
-			ft_error("USAGE: ft_ls [-Ralrt] [file ...]");
+			if (!ft_strchr("ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1", av[*i][j]))
+			{
+				ft_printf("ft_ls: illegal option -- %c\n", av[*i][j]);
+				ft_error("USAGE: ft_ls [-Ralrt] [file ...]");
+			}
+			f->l_flag = (av[*i][j] == 'l') ? 1 : 0;
+			f->ur_flag = (av[*i][j] == 'R') ? 1 : 0;
+			f->a_flag = (av[*i][j] == 'a') ? 1 : 0;
+			f->l_flag = (av[*i][j] == 'l') ? 1 : 0;
+			f->r_flag = (av[*i][j] == 'r') ? 1 : 0;
 		}
-		f->l_flag = (str[i] == 'l') ? 1 : 0;
-		f->ur_flag = (str[i] == 'R') ? 1 : 0;
-		f->a_flag = (str[i] == 'a') ? 1 : 0;
-		f->l_flag = (str[i] == 'l') ? 1 : 0;
-		f->r_flag = (str[i] == 'r') ? 1 : 0;
+		++(*i);
 	}
+	else
+		return ;
+	ls_flags(av, i, f);
 }
 
 int		main(int ac, char *av[])
 {
-	t_ls	ls;
+	t_ls	*ls;
 	int		i;
 
+	ls = (t_ls *)ft_memalloc(sizeof(t_ls));
 	i = 0;
-	while (++i < ac)
+	ls_flags(av, &i, ls->f);
+	if (!av[i] || ac == 1)
+		create_tree(ls, node_create("."));
+	while (i < ac)
 	{
-		if (av[i][0] == '-')
-			ls_flags(av[i], ls.f);
-		else
-		{
-			i -= 1;
-			break ;
-		}
+		create_tree(ls, node_create(av[i]));
+		i++;
 	}
-	// Should look at this later to make sure it is mathematically sound.  I need a pen!
-	if (i == ac)
-		do_the_thing(&ls, ".");
-	while (i++ < ac)
-		do_the_thing(&ls, av[i]);
 	return (0);
+	free(ls);
 }
