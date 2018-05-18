@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/15 17:03:35 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/17 22:50:57 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@ void	ft_error(char *str)
 {
 	ft_putendl(str);
 	exit(0);
+}
+
+void	trip_flags(char c, t_f *f)
+{
+	f->ua_flag = (av[*i][j] == 'A') ? 1 : 0;
+	f->ur_flag = (av[*i][j] == 'R') ? 1 : 0;
+	f->a_flag = (av[*i][j] == 'a') ? 1 : 0;
+	f->l_flag = (av[*i][j] == 'l') ? 1 : 0;
+	if (av[*i][j] == 'n')
+	{
+		f->n_flag = 1;
+		f->l_flag = 1;
+	}
+	f->r_flag = (av[*i][j] == 'r') ? 1 : 0;
+	f->t_flag = (av[*i][j] == 't') ? 1 : 0;
 }
 
 void	ls_flags(char **av, int *i, t_f *f)
@@ -30,14 +45,9 @@ void	ls_flags(char **av, int *i, t_f *f)
 			if (!ft_strchr("ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1", av[*i][j]))
 			{
 				ft_printf("ft_ls: illegal option -- %c\n", av[*i][j]);
-				ft_error("USAGE: ft_ls [-ARalrt] [file ...]");
+				ft_error("USAGE: ft_ls [-ARalnrt] [file ...]");
 			}
-			f->ua_flag = (av[*i][j] == 'A') ? 1 : 0;
-			f->ur_flag = (av[*i][j] == 'R') ? 1 : 0;
-			f->a_flag = (av[*i][j] == 'a') ? 1 : 0;
-			f->l_flag = (av[*i][j] == 'l') ? 1 : 0;
-			f->r_flag = (av[*i][j] == 'r') ? 1 : 0;
-			f->t_flag = (av[*i][j] == 't') ? 1 : 0;
+			trip_flags(av[*i][j], f);
 		}
 		++(*i);
 	}

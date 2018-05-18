@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/15 17:03:46 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/17 20:51:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ typedef struct		s_f
 	//int				s_flag;
 	//A flag for size sorting rather than
 }					t_f;
+
+typedef struct		s_i
+{
+	char			*perm;
+	int				links; //number of links
+	char			*owner;
+	char			*group;
+	int				size; //in bytes
+	char			*month;
+	int				day;
+	int				hh;
+	int				mm;
+	int				yyyy;
+	//int				owner_num;
+	//int				group_num;
+}					t_i;
 
 typedef struct		s_node
 {
