@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/18 19:13:05 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/19 15:01:59 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ t_node	*node_create(char *name)
 	return (node);
 }
 
+void	recurse(t_node *leaf, t_f *f, char *name)
+{
+	char	*new;
+
+	new = NULL;
+	if (ft_strcmp(".", leaf->name) != 0 && ft_strcmp("..", leaf->name) != 0)
+	{
+		if (f->a_flag || f->ua_flag)
+		{
+			new = ft_strjoin(ft_strjoin(name, "/"), leaf->name);
+			ft_printf("\n%s:\n", new);
+			leaf->direct ? create_tree(f, leaf, new) : 0;
+			free(new);
+		}
+		else
+		{
+			if (leaf->name[0] != '.')
+			{
+				new = ft_strjoin(ft_strjoin(name, "/"), leaf->name);
+				ft_printf("\n%s:\n", new);
+				create_tree(f, leaf, new);
+				free(new);
+			}
+		}
+	}
+}
+
 void	create_tree(t_f *ls, t_node *tree, char *name)
 {
 	int				i;
@@ -53,7 +80,7 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 	{
 		i = -1;
 		while (tree->files[++i])
-			tree->files[i]->direct ? create_tree(ls, tree->files[i], tree->files[i]->name) : 0;
+			tree->files[i]->direct ? recurse(tree->files[i], ls, name) : 0;
 	}
 	free(tree);
 }
