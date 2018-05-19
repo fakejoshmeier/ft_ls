@@ -6,13 +6,13 @@
 #    By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/19 18:26:10 by jmeier            #+#    #+#              #
-#    Updated: 2018/04/19 18:26:15 by jmeier           ###   ########.fr        #
+#    Updated: 2018/05/18 17:27:55 by jmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
-FUNC = main
+FUNC = main print sort create_tree
 
 C_LOC = src/
 C_NAM = $(addsuffix .c, $(FUNC))

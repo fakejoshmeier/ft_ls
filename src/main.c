@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/17 22:50:57 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/18 18:29:41 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@ void	ft_error(char *str)
 
 void	trip_flags(char c, t_f *f)
 {
-	f->ua_flag = (av[*i][j] == 'A') ? 1 : 0;
-	f->ur_flag = (av[*i][j] == 'R') ? 1 : 0;
-	f->a_flag = (av[*i][j] == 'a') ? 1 : 0;
-	f->l_flag = (av[*i][j] == 'l') ? 1 : 0;
-	if (av[*i][j] == 'n')
+	f->ua_flag = (c == 'A') ? 1 : 0;
+	f->ur_flag = (c == 'R') ? 1 : 0;
+	f->a_flag = (c == 'a') ? 1 : 0;
+	f->l_flag = (c == 'l') ? 1 : 0;
+	if (c == 'n')
 	{
 		f->n_flag = 1;
 		f->l_flag = 1;
 	}
-	f->r_flag = (av[*i][j] == 'r') ? 1 : 0;
-	f->t_flag = (av[*i][j] == 't') ? 1 : 0;
+	f->r_flag = (c == 'r') ? 1 : 0;
+	f->t_flag = (c == 't') ? 1 : 0;
 }
 
-void	ls_flags(char **av, int *i, t_f *f)
+void	ls_flags(char *av[], int *i, t_f *f)
 {
 	int		j;
 
-	j = -1;
-	if (av[*i][0] == '-')
+	j = 0;
+	if (av[*i] && av[*i][0] == '-')
 	{
 		while (av[*i][++j])
 		{
@@ -58,19 +58,20 @@ void	ls_flags(char **av, int *i, t_f *f)
 
 int		main(int ac, char *av[])
 {
-	t_ls	*ls;
+	t_f	*ls;
 	int		i;
 
-	ls = (t_ls *)ft_memalloc(sizeof(t_ls));
-	i = 0;
-	ls_flags(av, &i, ls->f);
-	if (!av[i] || ac == 1)
+	ls = (t_f *)ft_memalloc(sizeof(t_f));
+	i = 1;
+	if (ac > 1)
+		ls_flags(av, &i, ls);
+	if (ac == 1 || !av[i])
 		create_tree(ls, node_create("."), ".");
 	while (i < ac)
 	{
-		create_tree(ls, node_create(av[i]));
+		create_tree(ls, node_create(av[i]), av[i]);
 		i++;
 	}
-	return (0);
 	free(ls);
+	return (0);
 }
