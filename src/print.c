@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/18 19:10:18 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/20 13:20:48 by josh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,8 @@ t_i		*find_info(t_node *tree, int i)
 	ret->owner = ((pwd = getpwuid(stats.st_uid))) ? pwd->pw_name : NULL;
 	ret->group = ((grp = getgrgid(stats.st_gid))) ? grp->gr_name : NULL;
 	ret->size = stats.st_size;
-	if (time(NULL) - time(&stats.st_ctime) < 15552000) //||
-		//time(&stats.st_mtime) - time(NULL) >= 15552000)
-	{
-	//	printf("%i - ", time(NULL) - time(&stats.st_ctime) < 15552000);
-	//	printf("%i\n", time(NULL) - time(&stats.st_mtime) < 15552000);
+	if (time(NULL) - time(&stats.st_ctime) < 15552000)
 		ret->datestring = ft_strsub(ctime(&stats.st_mtime), 4, 12);
-	}
 	else
 		ret->datestring = ft_strjoin(ft_strsub(ctime(&stats.st_mtime), 4, 7),
 		ft_strsub(ctime(&stats.st_mtime), 20, 5));
@@ -91,10 +86,10 @@ void	print(t_node *tree, t_f *f)
 			tree->files[i]->info = find_info(tree, i);
 			tree->lt += tree->files[i]->info->links;
 		}
-		ft_printf("total %d\n", tree->lt);
+		ft_printf("total %d\n", tree->lt); //Is this blocks?
 		i = -1;
 	}
-	sort(tree, f);
+	sort(tree, f); //Once all the info has been created, I can sort the stuff based on whatever is in the info struct.
 	while (tree->files[++i] != NULL)
 	{
 		if (tree->files[i]->name[0] == '.' && !f->a_flag)
@@ -102,7 +97,8 @@ void	print(t_node *tree, t_f *f)
 		if (f->ua_flag && (!ft_strcmp(tree->files[i]->name, ".") ||
 			!ft_strcmp(tree->files[i]->name, "..")))
 			continue ;
-		f->l_flag ?	print_info(tree->files[i], f) : 0;
+		f->l_flag ? print_info(tree->files[i], f) : 0;
 		ft_printf("%s\n", tree->files[i]->name);
+		f->l_flag ? free_info(tree->files[i]->info): 0;
 	}
 }

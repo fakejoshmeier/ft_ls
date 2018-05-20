@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/19 15:01:59 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/20 13:14:32 by josh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		is_dir(const char *path)
 {
-	struct stat statbuf;
+	struct stat		statbuf;
 
 	if (stat(path, &statbuf) != 0)
 		return (0);
@@ -23,7 +23,7 @@ int		is_dir(const char *path)
 
 t_node	*node_create(char *name)
 {
-	t_node	*node;
+	t_node		*node;
 
 	node = (t_node *)ft_memalloc(sizeof(t_node));
 	node->name = name;
@@ -31,31 +31,39 @@ t_node	*node_create(char *name)
 	return (node);
 }
 
+void	leaf_free_or_die_hard(t_node *leaf)
+{
+	free(leaf->name);
+	free(leaf->info);
+	free(leaf->files);
+	free(leaf);
+}
+
 void	recurse(t_node *leaf, t_f *f, char *name)
 {
-	char	*new;
+	char			*new;
 
 	new = NULL;
 	if (ft_strcmp(".", leaf->name) != 0 && ft_strcmp("..", leaf->name) != 0)
 	{
 		if (f->a_flag || f->ua_flag)
 		{
-			new = ft_strjoin(ft_strjoin(name, "/"), leaf->name);
+			new = ft_strjoin(name, "/");
+			new = ft_strjoin(new, leaf->name);
 			ft_printf("\n%s:\n", new);
-			leaf->direct ? create_tree(f, leaf, new) : 0;
+			create_tree(f, leaf, new);
 			free(new);
 		}
-		else
+		else if (leaf->name[0] != '.')
 		{
-			if (leaf->name[0] != '.')
-			{
-				new = ft_strjoin(ft_strjoin(name, "/"), leaf->name);
-				ft_printf("\n%s:\n", new);
-				create_tree(f, leaf, new);
-				free(new);
-			}
+			new = ft_strjoin(name, "/");
+			new = ft_strjoin(new, leaf->name);
+			ft_printf("\n%s:\n", new);
+			create_tree(f, leaf, new);
+			free(new);
 		}
 	}
+	leaf_free_or_die_hard(leaf);
 }
 
 void	create_tree(t_f *ls, t_node *tree, char *name)
@@ -80,7 +88,8 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 	{
 		i = -1;
 		while (tree->files[++i])
-			tree->files[i]->direct ? recurse(tree->files[i], ls, name) : 0;
+			tree->files[i]->direct ? recurse(tree->files[i], ls, name) :
+			leaf_free_or_die_hard(tree->files[i]);
 	}
 	free(tree);
 }
