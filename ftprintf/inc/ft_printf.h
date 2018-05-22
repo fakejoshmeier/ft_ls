@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 19:21:30 by jmeier            #+#    #+#             */
-/*   Updated: 2017/12/12 22:11:20 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 03:29:11 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 # include "libft.h"
+
 
 typedef struct	s_flags
 {

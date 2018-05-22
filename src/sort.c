@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:11:50 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/18 17:43:57 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/21 23:17:52 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	sort_by_param(int i, t_node *tree, t_f *f)
 	tree->files[j + 1] = curr;
 }
 
-void	sort(t_node *tree, t_f *f)
+void	sort(t_node *tree, t_f *f, int size)
 {
 	int		i;
 
 	i = -1;
-	while (tree->files[++i])
+	while (++i < size)
 		sort_by_param(i, tree, f);
 }

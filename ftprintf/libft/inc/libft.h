@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:01:46 by jmeier            #+#    #+#             */
-/*   Updated: 2018/04/05 02:22:57 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/21 19:57:59 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int					ft_longlonglen(long long n, int base);
 int					ft_ulonglonglen(unsigned long long n, int base);
 void				ft_putstrn(char *s, int n);
 void				ft_putwstr(wchar_t *str);
-void				*ft_realloc(void *ptr, size_t size, size_t new_size);
+void				*ft_realloc(void *ptr, size_t new_size);
 void				ft_free(void *ptr);
 int					get_next_line(const int fd, char **line);
 int					ft_atoi(const char *str);

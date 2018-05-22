@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 12:55:47 by jmeier            #+#    #+#             */
-/*   Updated: 2017/12/12 21:31:13 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 05:27:08 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*str_width(char *output, t_all *f)
 	if (f->wid_flag == 0)
 		return (NULL);
 	g = output != NULL ? ft_strlen(output) : 6;
-	i = g > f->prec ? f->prec : g;
+	i = g > f->prec ? g : f->prec;
 	len = f->width > i ? f->width - i : 0;
 	new = ft_strnew(len);
 	if (f->dash == 0 && f->prec_flag == 0 && f->zero == 1)

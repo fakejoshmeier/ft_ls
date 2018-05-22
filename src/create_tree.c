@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/20 13:14:32 by josh             ###   ########.fr       */
+/*   Updated: 2018/05/22 02:57:03 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ t_node	*node_create(char *name)
 	node = (t_node *)ft_memalloc(sizeof(t_node));
 	node->name = name;
 	node->direct = is_dir(name);
+	node->ll = INT_MIN;
+	node->lo = INT_MIN;
+	node->lg = INT_MIN;
+	node->len_siz = INT_MIN;
+	node->len_on = INT_MIN;
+	node->len_gn = INT_MIN;
 	return (node);
-}
-
-void	leaf_free_or_die_hard(t_node *leaf)
-{
-	free(leaf->name);
-	free(leaf->info);
-	free(leaf->files);
-	free(leaf);
 }
 
 void	recurse(t_node *leaf, t_f *f, char *name)
@@ -53,6 +51,7 @@ void	recurse(t_node *leaf, t_f *f, char *name)
 			ft_printf("\n%s:\n", new);
 			create_tree(f, leaf, new);
 			free(new);
+			new = NULL;
 		}
 		else if (leaf->name[0] != '.')
 		{
@@ -61,9 +60,9 @@ void	recurse(t_node *leaf, t_f *f, char *name)
 			ft_printf("\n%s:\n", new);
 			create_tree(f, leaf, new);
 			free(new);
+			new = NULL;
 		}
 	}
-	leaf_free_or_die_hard(leaf);
 }
 
 void	create_tree(t_f *ls, t_node *tree, char *name)
@@ -74,22 +73,25 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 
 	i = 0;
 	open = opendir(name);
-	tree->files = (t_node **)ft_memalloc(sizeof(t_node *));
 	while ((dir = readdir(open)))
 	{
-		tree->files = (t_node **)ft_realloc(tree->files, (sizeof(t_node *) * i)
-		, (sizeof(t_node *) * (i + 1)));
+		if (dir->d_name[0] == '.' && !ls->a_flag && !ls->ua_flag)
+			continue ;
+		if (ls->ua_flag && (!ft_strcmp(dir->d_name, ".") ||
+			!ft_strcmp(dir->d_name, "..")))
+			continue ;
+		tree->files = (t_node **)re(tree->files, (sizeof(t_node *) * (i + 1)));
 		tree->files[i] = node_create(dir->d_name);
 		++i;
 	}
-	print(tree, ls);
+	print(tree, ls, i);
 	closedir(open);
 	if (ls->ur_flag)
 	{
 		i = -1;
-		while (tree->files[++i])
+		while (tree->files[++i] != NULL)
 			tree->files[i]->direct ? recurse(tree->files[i], ls, name) :
-			leaf_free_or_die_hard(tree->files[i]);
+			ft_free(tree->files[i]);
 	}
-	free(tree);
+	ft_free(tree);
 }
