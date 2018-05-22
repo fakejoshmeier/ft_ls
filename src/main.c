@@ -6,15 +6,24 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 08:06:58 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 13:14:06 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-void	ft_error(char *str)
+void	ft_error(char *str, int i)
 {
-	ft_putendl(str);
+	if (i == 0)
+	{
+		ft_printf("ft_ls: illegal option -- %s\n", str);
+		ft_putendl("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
+	}
+	else if (i == 1)
+		ft_printf("ft_ls: %s: No such files or directory\n", str);
+	else
+		ft_putendl(str);
+	(void)str;
 	exit(0);
 }
 
@@ -73,10 +82,7 @@ void	ls_flags(char *av[], int *i, t_f *f)
 		while (av[*i][++j])
 		{
 			if (!ft_strchr("ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1", av[*i][j]))
-			{
-				ft_printf("ft_ls: illegal option -- %c\n", av[*i][j]);
-				ft_error("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
-			}
+				ft_error(&av[*i][j], 0);
 			trip_flags(av[*i][j], f);
 		}
 		++(*i);

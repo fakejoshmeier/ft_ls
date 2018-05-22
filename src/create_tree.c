@@ -6,32 +6,11 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 08:04:10 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 14:18:45 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
-
-void	frito(t_node *leaf)
-{
-	int				i;
-
-	i = -1;
-	if (leaf->files)
-		while (leaf->files[++i])
-			ft_free(leaf->files[i]);
-	ft_free(leaf->files);
-	ft_free(leaf);
-}
-
-int		is_dir(const char *path)
-{
-	struct stat		statbuf;
-
-	if (stat(path, &statbuf) != 0)
-		return (0);
-	return (S_ISDIR(statbuf.st_mode));
-}
 
 t_node	*node_create(char *name)
 {
@@ -52,27 +31,27 @@ t_node	*node_create(char *name)
 void	recurse(t_node *leaf, t_f *f, char *name)
 {
 	char			*new;
+	char			*nnew;
 
 	new = NULL;
+	nnew = NULL;
 	if (ft_strcmp(".", leaf->name) != 0 && ft_strcmp("..", leaf->name) != 0)
 	{
 		if (f->a_flag || f->ua_flag)
 		{
 			new = ft_strjoin(name, "/");
-			new = ft_strjoin(new, leaf->name);
-			ft_printf("\n%s:\n", new);
-			create_tree(f, leaf, new);
-			free(new);
-			new = NULL;
+			nnew = ft_strjoin(new, leaf->name);
+			ft_printf("\n%s:\n", nnew);
+			create_tree(f, leaf, nnew);
+			free_deux(new, nnew);
 		}
 		else if (leaf->name[0] != '.')
 		{
 			new = ft_strjoin(name, "/");
-			new = ft_strjoin(new, leaf->name);
-			ft_printf("\n%s:\n", new);
-			create_tree(f, leaf, new);
-			free(new);
-			new = NULL;
+			nnew = ft_strjoin(new, leaf->name);
+			ft_printf("\n%s:\n", nnew);
+			create_tree(f, leaf, nnew);
+			free_deux(new, nnew);
 		}
 	}
 }
@@ -84,11 +63,7 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 	struct dirent	*dir;
 
 	i = 0;
-	if (!(open = opendir(name)))
-	{
-		ft_printf("ft_ls: %s: No such files or directory", name);
-		ft_error(".");
-	}
+	!(open = opendir(name)) ? ft_error(name, 1) : 0;
 	while ((dir = readdir(open)))
 	{
 		if (dir->d_name[0] == '.' && !ls->a_flag && !ls->ua_flag)
@@ -102,12 +77,10 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 	}
 	print(tree, ls, i);
 	closedir(open);
+	i = -1;
 	if (ls->ur_flag)
-	{
-		i = -1;
 		while (tree->files[++i] != NULL)
 			tree->files[i]->direct ? recurse(tree->files[i], ls, name) :
 			ft_free(tree->files[i]);
-	}
-	frito(tree);
+	frito(tree, ls);
 }

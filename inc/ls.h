@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 08:43:21 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 14:16:32 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 # include <pwd.h>
 # include <time.h>
 # include <stdio.h>
+
+# define RESET "\033[0m"
+# define BOLD "\033[1m"
+# define RED "\033[31;1m"
+# define GREEN "\033[32;1m"
+# define YELLOW "\033[33;1m"
+# define BLUE "\033[34;1m"
+# define MAGENTA "\033[35;1m"
+# define CYAN "\033[36;1m"
+# define WHITE "\033[37;1m"
 
 typedef struct		s_f
 {
@@ -53,6 +63,7 @@ typedef struct		s_i
 	int				blocks;
 	int				owner_num;
 	int				group_num;
+	char			*tmp;
 }					t_i;
 
 typedef struct		s_node
@@ -74,11 +85,15 @@ int					main(int ac, char *av[]);
 void				ls_flags(char **av, int *i, t_f *f);
 void				trip_flags(char c, t_f *f);
 void				*re(void *ptr, size_t new_size);
-void				ft_error(char *str);
+void				ft_error(char *str, int i);
 
 void				create_tree(t_f *ls, t_node *tree, char *name);
 t_node				*node_create(char *name);
 int					is_dir(const char *path);
+void				recurse(t_node *leaf, t_f *f, char *name);
+void				frito(t_node *leaf, t_f *f);
+void				putendl_c(char const *s, char *col);
+void				free_deux(void *ptr1, void *ptr2);
 
 void				sort(t_node *tree, t_f *f, int size);
 void				sort_by_param(int i, t_node *tree, t_f *f);
