@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 05:29:13 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 08:25:42 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,48 @@ char	*fill_perm(struct stat stats, char *filename)
 	return (ret);
 }
 
-t_i		*find_info(t_node *tree, int i)
+void	timefill(t_i *ret, struct stat stats, t_f *f)
+{
+	if (f->c_flag)
+		ret->time = stats.st_ctime;
+	else if (f->u_flag)
+		ret->time = stats.st_atime;
+	else
+		ret->time = stats.st_mtime;
+	if (f->ut_flag && f->l_flag)
+		ret->datestring = ft_strsub(ctime(&ret->time), 4, 20);
+	else if (time(NULL) - ret->time < 15552000)
+		ret->datestring = ft_strsub(ctime(&ret->time), 4, 12);
+	else
+		ret->datestring = ft_strjoin(ft_strsub(ctime(&ret->time), 4, 7),
+		ft_strsub(ctime(&ret->time), 20, 5));
+}
+
+t_i		*find_info(t_node *tree, int i, t_f *f)
 {
 	struct stat		stats;
 	struct passwd	*pwd;
 	struct group	*grp;
 	t_i				*ret;
+	char			*new;
 
-	if (stat(tree->files[i]->name, &stats) < 0)
+	new = ft_strjoin(tree->name, "/");
+	new = ft_strjoin(new, tree->files[i]->name);
+	if (stat(new, &stats) < 0)
 		return (NULL);
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);
 	ret = (t_i *)ft_memalloc(sizeof(t_i));
+	timefill(ret, stats, f);
 	ret->perm = fill_perm(stats, tree->files[i]->name);
 	ret->links = stats.st_nlink;
 	ret->owner = (pwd) ? pwd->pw_name : NULL;
 	ret->group = (grp) ? grp->gr_name : NULL;
 	ret->size = stats.st_size;
-	if (time(NULL) - time(&stats.st_ctime) < 15552000)
-		ret->datestring = ft_strsub(ctime(&stats.st_mtime), 4, 12);
-	else
-		ret->datestring = ft_strjoin(ft_strsub(ctime(&stats.st_mtime), 4, 7),
-		ft_strsub(ctime(&stats.st_mtime), 20, 5));
+	ret->blocks = stats.st_blocks;
 	ret->owner_num = (int)stats.st_uid;
 	ret->group_num = (int)stats.st_gid;
+	ft_free(new);
 	return (ret);
 }
 
@@ -68,14 +86,13 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 			head->len_gn + 1, node->info->group_num);
 	else
 	{
-		node->info->owner ? ft_printf("%*s ", head->lo + 1, node->info->owner)
-		: ft_printf("%*d ", head->len_on + 1, node->info->owner_num);
-
-		node->info->group ? ft_printf("%*s", head->lg + 1, node->info->group)
-		: ft_printf("%*d", head->len_gn + 1, node->info->group_num);
+		node->info->owner ? ft_printf("%*s ", head->lo + 1, node->info->owner) :
+		ft_printf("%*d ", head->len_on + 1, node->info->owner_num);
+		node->info->group ? ft_printf("%*s", head->lg + 1, node->info->group) :
+		ft_printf("%*d", head->len_gn + 1, node->info->group_num);
 	}
 	ft_printf(" %*d", head->len_siz + 1, node->info->size);
-	ft_printf(" %s ", node->info->datestring);
+	ft_printf(" %s %s\n", node->info->datestring, node->name);
 	ft_free(node->info->perm);
 	ft_free(node->info->datestring);
 	ft_free(node->info);

@@ -6,11 +6,23 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 02:57:03 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 08:04:10 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
+
+void	frito(t_node *leaf)
+{
+	int				i;
+
+	i = -1;
+	if (leaf->files)
+		while (leaf->files[++i])
+			ft_free(leaf->files[i]);
+	ft_free(leaf->files);
+	ft_free(leaf);
+}
 
 int		is_dir(const char *path)
 {
@@ -72,7 +84,11 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 	struct dirent	*dir;
 
 	i = 0;
-	open = opendir(name);
+	if (!(open = opendir(name)))
+	{
+		ft_printf("ft_ls: %s: No such files or directory", name);
+		ft_error(".");
+	}
 	while ((dir = readdir(open)))
 	{
 		if (dir->d_name[0] == '.' && !ls->a_flag && !ls->ua_flag)
@@ -93,5 +109,5 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 			tree->files[i]->direct ? recurse(tree->files[i], ls, name) :
 			ft_free(tree->files[i]);
 	}
-	ft_free(tree);
+	frito(tree);
 }

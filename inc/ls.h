@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 04:42:18 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 08:43:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,27 @@ typedef struct		s_f
 {
 	int				ua_flag;
 	int				ur_flag;
-	int				us_flag; //size sort
+	int				us_flag;
+	int				ut_flag;
 	int				a_flag;
-	int				f_flag; //Don't sort.  Turns on a_flag.
+	int				c_flag;
+	int				f_flag;
 	int				l_flag;
-	int				n_flag; //No group/user names.  Just numbers.
+	int				n_flag;
 	int				o_flag; //removes the group from printing in long format
-	int				p_flag; //writes a / after directory names
 	int				r_flag; //reverse the sort, default is lexicographical
-	int				s_flag; //print total number of blocks and blocks per file
-	int				t_flag; //time sort
+	int				t_flag;
+	int				u_flag;
 }					t_f;
 
 typedef struct		s_i
 {
 	char			*perm;
-	int				links; //number of links
+	int				links;
 	char			*owner;
 	char			*group;
-	int				size; //in bytes
+	int				size;
+	time_t			time;
 	char			*datestring;
 	int				blocks;
 	int				owner_num;
@@ -83,7 +85,7 @@ void				sort_by_param(int i, t_node *tree, t_f *f);
 
 void				print(t_node *tree, t_f *f, int size);
 void				print_info(t_node *head, t_node *node, t_f *f);
-t_i					*find_info(t_node *tree, int i);
+t_i					*find_info(t_node *tree, int i, t_f *f);
 char				*fill_perm(struct stat stats, char *filename);
 void				lengths(t_node *tree, t_i *ret);
 

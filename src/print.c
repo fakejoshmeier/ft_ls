@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 04:52:57 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 08:10:55 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void	print(t_node *tree, t_f *f, int size)
 	{
 		while (++i < size)
 		{
-			tree->files[i]->info = find_info(tree, i);
-			tree->lt += tree->files[i]->info->size;
+			tree->files[i]->info = find_info(tree, i, f);
+			if (!tree->files[i]->info)
+				ft_error("YOU DUN GOOFED BOI");
+			tree->lt += tree->files[i]->info->blocks;
 			lengths(tree, tree->files[i]->info);
 		}
-		ft_printf("total %d\n", (tree->lt / 512) + (tree->lt % 512 ? 1 : 0));
+		ft_printf("total %d\n", tree->lt);
 		i = -1;
 	}
 	if (!f->f_flag)
 		sort(tree, f, size);
 	while (++i < size)
-	{
-		f->l_flag ? print_info(tree, tree->files[i], f) : 0;
+		f->l_flag ? print_info(tree, tree->files[i], f) :
 		ft_printf("%s\n", tree->files[i]->name);
-	}
 }
