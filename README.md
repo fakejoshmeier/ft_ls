@@ -17,5 +17,7 @@ Extra functionality added in includes:
 
 -A - Include all entries whose names begin with a '.', excluding the "." and ".." directories.
 
+-n - Prints out the numerical identifier for any groups and owners.  This option automatically triggers the -l flag;
+
 To make the project, run make.
 To use the project, run ./ft_ls with any of the above flags.
