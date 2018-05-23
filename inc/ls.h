@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 14:16:32 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:23:00 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void				create_tree(t_f *ls, t_node *tree, char *name);
 t_node				*node_create(char *name);
 int					is_dir(const char *path);
 void				recurse(t_node *leaf, t_f *f, char *name);
-void				frito(t_node *leaf, t_f *f);
+void				frito(t_node *leaf, t_f *f, int size);
 void				putendl_c(char const *s, char *col);
 void				free_deux(void *ptr1, void *ptr2);
 

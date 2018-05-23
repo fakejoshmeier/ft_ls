@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 16:37:50 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:22:49 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 		while (++j < i)
 			tree->files[j]->direct ? recurse(tree->files[j], ls, name) :
 			free_deux(tree->files[j], tree->files[j]->name);
-	frito(tree, ls);
+	frito(tree, ls, i);
 }

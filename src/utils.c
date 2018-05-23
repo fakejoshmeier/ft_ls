@@ -6,20 +6,20 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 19:52:52 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:23:56 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-void	frito(t_node *leaf, t_f *f)
+void	frito(t_node *leaf, t_f *f, int size)
 {
 	int				i;
 
 	i = -1;
 	if (!f->ur_flag)
 		if (leaf->files)
-			while (leaf->files[++i])
+			while (++i < size)
 				free_deux(leaf->files[i], leaf->files[i]->name);
 	if (leaf->files)
 		ft_free(leaf->files);
