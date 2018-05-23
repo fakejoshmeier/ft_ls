@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 16:06:18 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:52:52 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void	frito(t_node *leaf, t_f *f)
 		ft_free(leaf->files);
 	ft_free(leaf->name);
 	ft_free(leaf);
+}
+
+void	ft_error(char *str, int i)
+{
+	if (i == 0)
+	{
+		ft_printf("ft_ls: illegal option -- %s\n", str);
+		ft_putendl("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
+	}
+	else if (i == 1)
+		ft_printf("ft_ls: %s: No such files or directory\n", str);
+	else
+		ft_putendl(str);
+	(void)str;
+	exit(0);
 }
 
 int		is_dir(const char *path)

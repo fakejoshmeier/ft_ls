@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 16:51:01 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:13:00 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	struct passwd	*pwd;
 	struct group	*grp;
 	t_i				*ret;
-	// char			*new;
+	char			*new;
 
 	ret = (t_i *)ft_memalloc(sizeof(t_i));
-	// ret->tmp = ft_strjoin(tree->name, "/");
-	// new = ft_strjoin(new, tree->files[i]->name);
-	if (stat(tree->files[i]->name, &stats) < 0)
+	ret->tmp = ft_strjoin(tree->name, "/");
+	new = ft_strjoin(ret->tmp, tree->files[i]->name);
+	printf("%s\n", new); //Need to write this in such a way that the path name is saved
+	if (stat(new, &stats) < 0)
 		return (NULL);
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);
@@ -74,7 +75,7 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	ret->blocks = stats.st_blocks;
 	ret->owner_num = (int)stats.st_uid;
 	ret->group_num = (int)stats.st_gid;
-	// free_deux(new, ret->tmp);
+	free_deux(new, ret->tmp);
 	return (ret);
 }
 

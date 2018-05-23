@@ -6,26 +6,11 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 17:02:55 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:10:30 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
-
-void	ft_error(char *str, int i)
-{
-	if (i == 0)
-	{
-		ft_printf("ft_ls: illegal option -- %s\n", str);
-		ft_putendl("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
-	}
-	else if (i == 1)
-		ft_printf("ft_ls: %s: No such files or directory\n", str);
-	else
-		ft_putendl(str);
-	(void)str;
-	exit(0);
-}
 
 void	*re(void *ptr, size_t new_size)
 {
@@ -38,6 +23,23 @@ void	*re(void *ptr, size_t new_size)
 	free(ptr);
 	ptr = NULL;
 	return (new);
+}
+
+void	keep_on_trippin(char c, t_f *f)
+{
+	c == 'l' ? (f->l_flag = 1) : 0;
+	if (c == 'n')
+	{
+		f->n_flag = 1;
+		f->l_flag = 1;
+	}
+	c == 'r' ? (f->r_flag = 1) : 0;
+	c == 't' ? (f->t_flag = 1) : 0;
+	if (c == 'u')
+	{
+		f->c_flag = 0;
+		f->u_flag = 1;
+	}
 }
 
 void	trip_flags(char c, t_f *f)
@@ -57,19 +59,7 @@ void	trip_flags(char c, t_f *f)
 		f->f_flag = 1;
 		f->a_flag = 1;
 	}
-	c == 'l' ? (f->l_flag = 1) : 0;
-	if (c == 'n')
-	{
-		f->n_flag = 1;
-		f->l_flag = 1;
-	}
-	c == 'r' ? (f->r_flag = 1) : 0;
-	c == 't' ? (f->t_flag = 1) : 0;
-	if (c == 'u')
-	{
-		f->c_flag = 0;
-		f->u_flag = 1;
-	}
+	keep_on_trippin(c, f);
 }
 
 void	ls_flags(char *av[], int *i, t_f *f)
