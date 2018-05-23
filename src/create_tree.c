@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 14:18:45 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 16:37:50 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_node	*node_create(char *name)
 	t_node		*node;
 
 	node = (t_node *)ft_memalloc(sizeof(t_node));
-	node->name = name;
+	node->name = ft_strdup(name);
 	node->direct = is_dir(name);
 	node->ll = INT_MIN;
 	node->lo = INT_MIN;
@@ -59,6 +59,7 @@ void	recurse(t_node *leaf, t_f *f, char *name)
 void	create_tree(t_f *ls, t_node *tree, char *name)
 {
 	int				i;
+	int				j;
 	DIR				*open;
 	struct dirent	*dir;
 
@@ -72,15 +73,14 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 			!ft_strcmp(dir->d_name, "..")))
 			continue ;
 		tree->files = (t_node **)re(tree->files, (sizeof(t_node *) * (i + 1)));
-		tree->files[i] = node_create(dir->d_name);
-		++i;
+		tree->files[i++] = node_create(dir->d_name);
 	}
 	print(tree, ls, i);
 	closedir(open);
-	i = -1;
+	j = -1;
 	if (ls->ur_flag)
-		while (tree->files[++i] != NULL)
-			tree->files[i]->direct ? recurse(tree->files[i], ls, name) :
-			ft_free(tree->files[i]);
+		while (++j < i)
+			tree->files[j]->direct ? recurse(tree->files[j], ls, name) :
+			free_deux(tree->files[j], tree->files[j]->name);
 	frito(tree, ls);
 }

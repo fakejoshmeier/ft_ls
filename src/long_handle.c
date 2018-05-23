@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 14:14:21 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/22 16:51:01 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 
 void	print_info(t_node *head, t_node *node, t_f *f)
 {
-	ft_printf("%s% *i", node->info->perm, head->ll, node->info->links);
+	ft_printf("%s %*i", node->info->perm, head->ll, node->info->links);
 	if (f->n_flag)
-		ft_printf("%*d % *d", head->len_on + 1, node->info->owner_num,
+		ft_printf("%*d %*d", head->len_on + 1, node->info->owner_num,
 			head->len_gn + 1, node->info->group_num);
 	else
 	{
