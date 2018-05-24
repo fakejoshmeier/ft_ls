@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 15:27:37 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 17:22:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ typedef struct		s_f
 	int				f_flag;
 	int				l_flag;
 	int				n_flag;
-	int				o_flag; //removes the group from printing in long format
-	int				r_flag; //reverse the sort, default is lexicographical
+	int				o_flag;
+	int				r_flag;
 	int				t_flag;
 	int				u_flag;
 }					t_f;
