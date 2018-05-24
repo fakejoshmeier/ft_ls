@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 16:04:47 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 17:20:38 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	lengths(t_node *tree, t_i *ret)
 		(int)ft_strlen(ret->group) : tree->lg;
 	tree->len_siz = (int)ft_numlen(ret->size, 10) > tree->len_siz ?
 		(int)ft_numlen(ret->size, 10) : tree->len_siz;
-	// if (ret->size == 0)
-	// 	tree->len_siz = 1;
 	tree->len_on = (int)ft_numlen(ret->owner_num, 10) > tree->len_on ?
 		(int)ft_numlen(ret->owner_num, 10) : tree->len_on;
 	tree->len_gn = (int)ft_numlen(ret->group_num, 10) > tree->len_gn ?
