@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 20:19:39 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 16:04:47 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	lengths(t_node *tree, t_i *ret)
 		(int)ft_strlen(ret->group) : tree->lg;
 	tree->len_siz = (int)ft_numlen(ret->size, 10) > tree->len_siz ?
 		(int)ft_numlen(ret->size, 10) : tree->len_siz;
+	// if (ret->size == 0)
+	// 	tree->len_siz = 1;
 	tree->len_on = (int)ft_numlen(ret->owner_num, 10) > tree->len_on ?
 		(int)ft_numlen(ret->owner_num, 10) : tree->len_on;
 	tree->len_gn = (int)ft_numlen(ret->group_num, 10) > tree->len_gn ?
@@ -51,7 +53,16 @@ void	print(t_node *tree, t_f *f, int size)
 	while (++i < size)
 	{
 		f->l_flag ? print_info(tree, tree->files[i], f) : 0;
-		tree->files[i]->direct ? putendl_c(tree->files[i]->name, BLUE) :
+		// tree->files[i]->direct ? putendl_c(tree->files[i]->name, BLUE) :
+		// ft_putendl(tree->files[i]->name);
+		tree->files[i]->direct ? ft_putendl(tree->files[i]->name) :
 		ft_putendl(tree->files[i]->name);
 	}
 }
+
+/*
+** This is a line written for testing since the colored output comes out
+** differently compared to the system's
+** tree->files[i]->direct ? ft_putendl(tree->files[i]->name) :
+** ft_putendl(tree->files[i]->name);
+*/

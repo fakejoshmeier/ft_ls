@@ -6,24 +6,11 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 20:26:52 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 17:14:30 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
-
-void	*re(void *ptr, size_t new_size)
-{
-	void	*new;
-
-	new = (void *)ft_memalloc(new_size);
-	if (new == NULL)
-		return (NULL);
-	new = ft_memcpy(new, ptr, new_size);
-	free(ptr);
-	ptr = NULL;
-	return (new);
-}
 
 void	keep_on_trippin(char c, t_f *f)
 {
@@ -94,14 +81,12 @@ int		main(int ac, char *av[])
 	if (ac > 1)
 		ls_flags(av, &i, ls);
 	if (ac == 1 || !av[i])
-		create_tree(ls, node_create("."), ".");
+		create_tree(ls, node_create(".", "."), ".");
 	while (i < ac)
 	{
 		ft_printf("%s:\n", av[i]);
-		new = ft_strjoin("./", av[i]);
-		create_tree(ls, node_create(new), new);
-		ft_free(new);
-		write(1, "\n", 1);
+		create_tree(ls, node_create(av[i], "."), av[i]);
+		i + 1 < ac ? write(1, "\n", 1) : 0;
 		i++;
 	}
 	free(ls);

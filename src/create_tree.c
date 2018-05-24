@@ -6,25 +6,42 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 20:22:49 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 15:33:40 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-t_node	*node_create(char *name)
+void	*re(void *ptr, size_t new_size)
+{
+	void	*new;
+
+	new = (void *)ft_memalloc(new_size);
+	if (new == NULL)
+		return (NULL);
+	new = ft_memcpy(new, ptr, new_size);
+	free(ptr);
+	ptr = NULL;
+	return (new);
+}
+
+t_node	*node_create(char *name, char *dir_name)
 {
 	t_node		*node;
+	char		*new;
 
+	new = ft_strjoin(dir_name, "/");
 	node = (t_node *)ft_memalloc(sizeof(t_node));
+	node->path = ft_strjoin(new, name);
 	node->name = ft_strdup(name);
-	node->direct = is_dir(name);
+	node->direct = is_dir(node->path);
 	node->ll = INT_MIN;
 	node->lo = INT_MIN;
 	node->lg = INT_MIN;
 	node->len_siz = INT_MIN;
 	node->len_on = INT_MIN;
 	node->len_gn = INT_MIN;
+	ft_free(new);
 	return (node);
 }
 
@@ -73,7 +90,7 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 			!ft_strcmp(dir->d_name, "..")))
 			continue ;
 		tree->files = (t_node **)re(tree->files, (sizeof(t_node *) * (i + 1)));
-		tree->files[i++] = node_create(dir->d_name);
+		tree->files[i++] = node_create(dir->d_name, name);
 	}
 	print(tree, ls, i);
 	closedir(open);

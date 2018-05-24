@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 20:23:56 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 16:31:11 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	frito(t_node *leaf, t_f *f, int size)
 				free_deux(leaf->files[i], leaf->files[i]->name);
 	if (leaf->files)
 		ft_free(leaf->files);
+	ft_free(leaf->path);
 	ft_free(leaf->name);
 	ft_free(leaf);
 }

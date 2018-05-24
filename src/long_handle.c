@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/22 20:13:00 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/05/23 16:04:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,10 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	struct passwd	*pwd;
 	struct group	*grp;
 	t_i				*ret;
-	char			*new;
 
 	ret = (t_i *)ft_memalloc(sizeof(t_i));
-	ret->tmp = ft_strjoin(tree->name, "/");
-	new = ft_strjoin(ret->tmp, tree->files[i]->name);
-	printf("%s\n", new); //Need to write this in such a way that the path name is saved
-	if (stat(new, &stats) < 0)
+//	printf(" - %s\n", tree->files[i]->path);
+	if (stat(tree->files[i]->path, &stats) < 0)
 		return (NULL);
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);
@@ -75,7 +72,7 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	ret->blocks = stats.st_blocks;
 	ret->owner_num = (int)stats.st_uid;
 	ret->group_num = (int)stats.st_gid;
-	free_deux(new, ret->tmp);
+	ft_free(ret->tmp);
 	return (ret);
 }
 
@@ -92,7 +89,8 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 		node->info->group ? ft_printf("%*s", head->lg + 1, node->info->group) :
 		ft_printf("%*d", head->len_gn + 1, node->info->group_num);
 	}
-	ft_printf(" %*d", head->len_siz + 1, node->info->size);
+	node->info->size == 0 ? ft_printf(" %*d", head->len_siz, node->info->size) :
+		ft_printf(" %*d", head->len_siz + 1, node->info->size);
 	ft_printf(" %s ", node->info->datestring);
 	ft_free(node->info->perm);
 	ft_free(node->info->datestring);
