@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 17:20:38 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/03 14:55:02 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	print(t_node *tree, t_f *f, int size)
 		f->l_flag ? print_info(tree, tree->files[i], f) : 0;
 		// tree->files[i]->direct ? putendl_c(tree->files[i]->name, BLUE) :
 		// ft_putendl(tree->files[i]->name);
-		tree->files[i]->direct ? ft_putendl(tree->files[i]->name) :
-		ft_putendl(tree->files[i]->name);
+		tree->files[i]->direct ? ft_printf("%s\n", tree->files[i]->name) :
+		ft_printf("%s\n", tree->files[i]->name);
 	}
 }
 

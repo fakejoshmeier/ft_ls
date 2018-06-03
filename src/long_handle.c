@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 17:21:25 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/03 14:54:25 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*fill_perm(struct stat stats, char *filename)
 
 void	timefill(t_i *ret, struct stat stats, t_f *f)
 {
+	char	*tmp;
+
 	if (f->c_flag)
 		ret->time = stats.st_ctime;
 	else if (f->u_flag)
@@ -47,7 +49,8 @@ void	timefill(t_i *ret, struct stat stats, t_f *f)
 		ret->datestring = ft_strsub(ctime(&ret->time), 4, 12);
 	else
 		ret->datestring = ft_strjoin(ft_strsub(ctime(&ret->time), 4, 7),
-		ft_strsub(ctime(&ret->time), 20, 5));
+		ft_strsub(ctime(&ret->time), 19, 5));
+	(void)tmp;
 }
 
 t_i		*find_info(t_node *tree, int i, t_f *f)
@@ -88,8 +91,9 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 		node->info->group ? ft_printf("%*s", head->lg + 1, node->info->group) :
 		ft_printf("%*d", head->len_gn + 1, node->info->group_num);
 	}
-	node->info->size == 0 ? ft_printf(" %*d", head->len_siz, node->info->size) :
-		ft_printf(" %*d", head->len_siz + 1, node->info->size);
+	node->info->size == 0 ? ft_printf(" %*d", head->len_siz, node->info->size):
+		ft_printf(" %*d", head->len_siz + 1, node->info->size,
+		node->info->datestring);
 	ft_printf(" %s ", node->info->datestring);
 	ft_free(node->info->perm);
 	ft_free(node->info->datestring);
