@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/03 14:54:25 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/03 16:14:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);
 	timefill(ret, stats, f);
-	ret->perm = fill_perm(stats, tree->files[i]->name);
+	ret->perm = fill_perm(stats, tree->files[i]->path);
 	ret->links = stats.st_nlink;
 	ret->owner = (pwd) ? pwd->pw_name : NULL;
 	ret->group = (grp) ? grp->gr_name : NULL;

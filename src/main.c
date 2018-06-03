@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 17:14:30 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/03 15:11:40 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		main(int ac, char *av[])
 {
 	t_f		*ls;
 	int		i;
+	int		tmp;
 	char	*new;
 
 	ls = (t_f *)ft_memalloc(sizeof(t_f));
@@ -82,9 +83,11 @@ int		main(int ac, char *av[])
 		ls_flags(av, &i, ls);
 	if (ac == 1 || !av[i])
 		create_tree(ls, node_create(".", "."), ".");
+	tmp = i;
 	while (i < ac)
 	{
-		ft_printf("%s:\n", av[i]);
+		//tmp == i && tmp < ac - 1 ? do_a_sort(av, i, ac - 1, ls) : 0;
+		tmp != ac - 1 ? ft_printf("%s:\n", av[i]) : 0;
 		create_tree(ls, node_create(av[i], "."), av[i]);
 		i + 1 < ac ? write(1, "\n", 1) : 0;
 		i++;
