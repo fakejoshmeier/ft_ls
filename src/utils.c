@@ -6,41 +6,38 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/23 16:31:11 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 16:53:32 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
+
+void	free_trois(void *ptr1, void *ptr2, void *ptr3)
+{
+	free(ptr1);
+	free(ptr2);
+	free(ptr3);
+	ptr1 = NULL;
+	ptr2 = NULL;
+	ptr3 = NULL;
+}
 
 void	frito(t_node *leaf, t_f *f, int size)
 {
 	int				i;
 
 	i = -1;
+	(void)f;
 	if (!f->ur_flag)
 		if (leaf->files)
 			while (++i < size)
-				free_deux(leaf->files[i], leaf->files[i]->name);
+				free_trois(leaf->files[i]->path, leaf->files[i]->name,
+				leaf->files[i]);
 	if (leaf->files)
 		ft_free(leaf->files);
 	ft_free(leaf->path);
 	ft_free(leaf->name);
 	ft_free(leaf);
-}
-
-void	ft_error(char *str, int i)
-{
-	if (i == 0)
-	{
-		ft_printf("ft_ls: illegal option -- %s\n", str);
-		ft_putendl("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
-	}
-	else if (i == 1)
-		ft_printf("ft_ls: %s: No such files or directory\n", str);
-	else
-		ft_putendl(str);
-	(void)str;
-	exit(0);
 }
 
 int		is_dir(const char *path)

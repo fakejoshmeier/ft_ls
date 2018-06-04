@@ -6,11 +6,26 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/03 15:11:40 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 16:55:34 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
+
+void	ft_error(char *str, int i)
+{
+	if (i == 0)
+	{
+		ft_printf("ft_ls: illegal option -- %s\n", str);
+		ft_putendl("USAGE: ft_ls [-ARSTacflnrtu] [file ...]");
+	}
+	else if (i == 1)
+		ft_printf("ft_ls: %s: No such files or directory\n", str);
+	else
+		ft_putendl(str);
+	(void)str;
+	exit(0);
+}
 
 void	keep_on_trippin(char c, t_f *f)
 {
@@ -81,7 +96,7 @@ int		main(int ac, char *av[])
 	new = NULL;
 	if (ac > 1)
 		ls_flags(av, &i, ls);
-	if (ac == 1 || !av[i])
+			if (ac == 1 || !av[i])
 		create_tree(ls, node_create(".", "."), ".");
 	tmp = i;
 	while (i < ac)
