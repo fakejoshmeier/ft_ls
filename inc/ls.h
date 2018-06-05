@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 17:00:42 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 20:21:45 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct		s_node
 	char			*name;
 	char			*path;
 	int				direct;
+	int				sym;
 	int				lt;
 	t_i				*info;
 	int				ll;
@@ -93,7 +94,7 @@ t_node				*node_create(char *name, char *dir_name);
 int					is_dir(const char *path);
 void				recurse(t_node *leaf, t_f *f, char *name);
 void				frito(t_node *leaf, t_f *f, int size);
-void				putendl_c(char const *s, char *col);
+void				putendl_c(char const *s, char *col, int i);
 void				free_deux(void *ptr1, void *ptr2);
 void				f_trois(void *ptr1, void *ptr2, void *ptr3);
 

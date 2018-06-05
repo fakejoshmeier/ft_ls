@@ -6,21 +6,11 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 17:00:34 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 20:21:26 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
-
-void	f_trois(void *ptr1, void *ptr2, void *ptr3)
-{
-	free(ptr1);
-	free(ptr2);
-	free(ptr3);
-	ptr1 = NULL;
-	ptr2 = NULL;
-	ptr3 = NULL;
-}
 
 void	frito(t_node *leaf, t_f *f, int size)
 {
@@ -40,21 +30,13 @@ void	frito(t_node *leaf, t_f *f, int size)
 	ft_free(leaf);
 }
 
-int		is_dir(const char *path)
-{
-	struct stat		statbuf;
-
-	if (stat(path, &statbuf) != 0)
-		return (0);
-	return (S_ISDIR(statbuf.st_mode));
-}
-
-void	putendl_c(char const *s, char *col)
+void	putendl_c(char const *s, char *col, int i)
 {
 	ft_putstr_fd(col, STDOUT_FILENO);
 	ft_putstr_fd(s, STDOUT_FILENO);
 	ft_putstr_fd(RESET, STDOUT_FILENO);
-	write(1, "\n", 1);
+	if (i)
+		write(1, "\n", 1);
 }
 
 void	free_deux(void *ptr1, void *ptr2)
@@ -63,4 +45,14 @@ void	free_deux(void *ptr1, void *ptr2)
 	free(ptr2);
 	ptr1 = NULL;
 	ptr2 = NULL;
+}
+
+void	f_trois(void *ptr1, void *ptr2, void *ptr3)
+{
+	free(ptr1);
+	free(ptr2);
+	free(ptr3);
+	ptr1 = NULL;
+	ptr2 = NULL;
+	ptr3 = NULL;
 }

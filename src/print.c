@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/03 14:55:02 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 20:43:49 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,29 @@ void	lengths(t_node *tree, t_i *ret)
 		(int)ft_numlen(ret->owner_num, 10) : tree->len_on;
 	tree->len_gn = (int)ft_numlen(ret->group_num, 10) > tree->len_gn ?
 		(int)ft_numlen(ret->group_num, 10) : tree->len_gn;
+}
+
+void	eat_my_butt_norme(t_node *t, t_f *f, int i)
+{
+	char 	b[1024];
+	ssize_t	len;
+
+	if (t->files[i]->sym)
+	{
+		if (f->l_flag)
+		{
+			if ((len = readlink(t->files[i]->path, b, sizeof(b) - 1)) != -1)
+				b[len] = '\0';
+			putendl_c(t->files[i]->name, MAGENTA, 0);
+			ft_printf(" -> %s\n", b);
+		}
+		else
+			putendl_c(t->files[i]->name, MAGENTA, 1);
+	}
+	else if (t->files[i]->direct)
+		putendl_c(t->files[i]->name, BLUE, 1);
+	else
+		ft_putendl(t->files[i]->name);
 }
 
 void	print(t_node *tree, t_f *f, int size)
@@ -51,12 +74,10 @@ void	print(t_node *tree, t_f *f, int size)
 	while (++i < size)
 	{
 		f->l_flag ? print_info(tree, tree->files[i], f) : 0;
-		// tree->files[i]->direct ? putendl_c(tree->files[i]->name, BLUE) :
-		// ft_putendl(tree->files[i]->name);
-		tree->files[i]->direct ? ft_printf("%s\n", tree->files[i]->name) :
-		ft_printf("%s\n", tree->files[i]->name);
+		eat_my_butt_norme(tree, f, i);
 	}
 }
+
 
 /*
 ** This is a line written for testing since the colored output comes out

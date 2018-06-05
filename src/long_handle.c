@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/03 16:14:21 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 20:14:11 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 	t_i				*ret;
 
 	ret = (t_i *)ft_memalloc(sizeof(t_i));
-	if (stat(tree->files[i]->path, &stats) < 0)
+	if (lstat(tree->files[i]->path, &stats) < 0)
 		return (NULL);
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);

@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 17:00:51 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 20:52:42 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	*re(void *ptr, size_t new_size)
 	new = (void *)ft_memalloc(new_size);
 	if (new == NULL)
 		return (NULL);
+	if (ptr == NULL)
+		return (new);
 	new = ft_memcpy(new, ptr, new_size);
 	free(ptr);
 	ptr = NULL;
@@ -27,14 +29,18 @@ void	*re(void *ptr, size_t new_size)
 
 t_node	*node_create(char *name, char *dir_name)
 {
+	struct stat	statbuf;	
 	t_node		*node;
 	char		*new;
 
 	new = ft_strjoin(dir_name, "/");
 	node = (t_node *)ft_memalloc(sizeof(t_node));
 	node->path = ft_strjoin(new, name);
+	if (lstat(node->path, &statbuf) != 0)
+		return (0);
 	node->name = ft_strdup(name);
-	node->direct = is_dir(node->path);
+	node->direct = S_ISDIR(statbuf.st_mode) ? 1 : 0;
+	node->sym = S_ISLNK(statbuf.st_mode) ? 1 : 0;
 	node->ll = INT_MIN;
 	node->lo = INT_MIN;
 	node->lg = INT_MIN;
