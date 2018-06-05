@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 16:51:34 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 17:00:42 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void				recurse(t_node *leaf, t_f *f, char *name);
 void				frito(t_node *leaf, t_f *f, int size);
 void				putendl_c(char const *s, char *col);
 void				free_deux(void *ptr1, void *ptr2);
-void				free_trois(void *ptr1, void *ptr2, void *ptr3);
+void				f_trois(void *ptr1, void *ptr2, void *ptr3);
 
 void				sort(t_node *tree, t_f *f, int size);
 void				sort_by_param(int i, t_node *tree, t_f *f);

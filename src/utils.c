@@ -6,13 +6,13 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 16:53:32 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/04 17:00:34 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-void	free_trois(void *ptr1, void *ptr2, void *ptr3)
+void	f_trois(void *ptr1, void *ptr2, void *ptr3)
 {
 	free(ptr1);
 	free(ptr2);
@@ -31,7 +31,7 @@ void	frito(t_node *leaf, t_f *f, int size)
 	if (!f->ur_flag)
 		if (leaf->files)
 			while (++i < size)
-				free_trois(leaf->files[i]->path, leaf->files[i]->name,
+				f_trois(leaf->files[i]->path, leaf->files[i]->name,
 				leaf->files[i]);
 	if (leaf->files)
 		ft_free(leaf->files);
