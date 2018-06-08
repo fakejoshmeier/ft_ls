@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 20:52:42 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/07 19:03:12 by josh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ void	*re(void *ptr, size_t new_size)
 
 t_node	*node_create(char *name, char *dir_name)
 {
-	struct stat	statbuf;	
+	struct stat	statbuf;
 	t_node		*node;
 	char		*new;
 
 	new = ft_strjoin(dir_name, "/");
 	node = (t_node *)ft_memalloc(sizeof(t_node));
 	node->path = ft_strjoin(new, name);
-	if (lstat(node->path, &statbuf) != 0)
-		return (0);
+	!lstat(node->path, &statbuf) ? ft_error(node->path, 1) : 0;
 	node->name = ft_strdup(name);
 	node->direct = S_ISDIR(statbuf.st_mode) ? 1 : 0;
 	node->sym = S_ISLNK(statbuf.st_mode) ? 1 : 0;
@@ -47,6 +46,12 @@ t_node	*node_create(char *name, char *dir_name)
 	node->len_siz = INT_MIN;
 	node->len_on = INT_MIN;
 	node->len_gn = INT_MIN;
+	if (f->c_flag)
+		node->time = stats.st_ctime;
+	else if (f->u_flag)
+		node->time = stats.st_atime;
+	else
+		node->time = stats.st_mtime;
 	ft_free(new);
 	return (node);
 }

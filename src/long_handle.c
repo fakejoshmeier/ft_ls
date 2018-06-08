@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 20:14:11 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/07 19:07:32 by josh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,17 @@ char	*fill_perm(struct stat stats, char *filename)
 	return (ret);
 }
 
-void	timefill(t_i *ret, struct stat stats, t_f *f)
+void	timefill(t_i *ret, t_node *root, t_f *f)
 {
 	char	*tmp;
 
-	if (f->c_flag)
-		ret->time = stats.st_ctime;
-	else if (f->u_flag)
-		ret->time = stats.st_atime;
-	else
-		ret->time = stats.st_mtime;
-	if (f->ut_flag && f->l_flag)
-		ret->datestring = ft_strsub(ctime(&ret->time), 4, 20);
+	if (f->ut_flag)
+		ret->datestring = ft_strsub(ctime(&root->time), 4, 20);
 	else if (time(NULL) - ret->time < 15552000)
-		ret->datestring = ft_strsub(ctime(&ret->time), 4, 12);
+		ret->datestring = ft_strsub(ctime(&root->time), 4, 12);
 	else
-		ret->datestring = ft_strjoin(ft_strsub(ctime(&ret->time), 4, 7),
-		ft_strsub(ctime(&ret->time), 19, 5));
+		ret->datestring = ft_strjoin(ft_strsub(ctime(&root->time), 4, 7),
+		ft_strsub(ctime(&root->time), 19, 5));
 	(void)tmp;
 }
 
@@ -65,7 +59,7 @@ t_i		*find_info(t_node *tree, int i, t_f *f)
 		return (NULL);
 	pwd = getpwuid(stats.st_uid);
 	grp = getgrgid(stats.st_gid);
-	timefill(ret, stats, f);
+	timefill(ret, tree->files[i], f);
 	ret->perm = fill_perm(stats, tree->files[i]->path);
 	ret->links = stats.st_nlink;
 	ret->owner = (pwd) ? pwd->pw_name : NULL;

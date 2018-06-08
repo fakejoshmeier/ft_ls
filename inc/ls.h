@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 20:21:45 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/06/07 18:58:22 by josh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct		s_i
 	char			*owner;
 	char			*group;
 	int				size;
-	time_t			time;
 	char			*datestring;
 	int				blocks;
 	int				owner_num;
@@ -75,6 +74,7 @@ typedef struct		s_node
 	int				sym;
 	int				lt;
 	t_i				*info;
+	time_t			time;
 	int				ll;
 	int				lo;
 	int				lg;
