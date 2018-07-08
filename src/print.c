@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:12:09 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:29:28 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	lengths(t_node *tree, t_i *ret)
 
 void	eat_my_butt_norme(t_node *t, t_f *f, int i)
 {
-	char 	b[1024];
+	char	b[1024];
 	ssize_t	len;
 
 	if (t->files[i]->sym)

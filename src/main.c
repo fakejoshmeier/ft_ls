@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:15:44 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:26:49 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,26 @@ void	ls_flags(char *av[], int *i, t_f *f)
 
 int		main(int ac, char *av[])
 {
+	char	**new;
 	t_f		*ls;
 	int		i;
 	int		j;
-	int		k = -1;
-	char	**new;
+	int		k;
 
 	ls = (t_f *)ft_memalloc(sizeof(t_f));
 	i = 1;
 	if (ac > 1)
 		ls_flags(av, &i, ls);
-	if (ac == 1 || !av[i])
-		create_tree(ls, node_create(".", ".", ls), ".");
+	ac == 1 || !av[i] ? create_tree(ls, node_create(".", ".", ls), ".") : 0;
 	new = inputs(av, i, ac - 1, ls);
 	j = i;
-	while (i < ac && new)
+	k = -1;
+	while (++k + j < ac && new)
 	{
-		while (new[++k])
-		{
-			j != ac - 1 ? ft_printf("%s:\n", new[k]) : 0;
-			create_tree(ls, node_create(new[k], ".", ls), new[k]);
-			j + 1 < ac - i ? write(1, "\n", 1) : 0;
-			ft_free(new[k]);
-		}
+		j != ac - 1 ? ft_printf("%s:\n", new[k]) : 0;
+		create_tree(ls, node_create(new[k], ".", ls), new[k]);
+		j + k < ac - 1 ? write(1, "\n", 1) : 0;
+		ft_free(new[k]);
 	}
 	free(ls);
 	return (0);

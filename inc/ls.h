@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 00:57:04 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:31:39 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ void				frito(t_node *leaf, t_f *f, int size);
 void				putendl_c(char const *s, char *col, int i);
 void				free_deux(void *ptr1, void *ptr2);
 void				f_trois(void *ptr1, void *ptr2, void *ptr3);
-
-//void				sort(t_node *tree, t_f *f, int size);
-//void				sort_by_param(int i, t_node *tree, t_f *f);
 
 void				sort(t_node *tree, t_f *f);
 void				quicksort(t_node **files, int low, int high, t_f *f);

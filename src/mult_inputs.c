@@ -6,18 +6,17 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 11:36:25 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:15:45 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:30:31 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-
 char	**sort_inputs(t_node **files, t_f *f, int size)
 {
 	char	**ret;
 	int		i;
-	int 	j;
+	int		j;
 
 	if (size == 0)
 		return (NULL);
@@ -30,8 +29,8 @@ char	**sort_inputs(t_node **files, t_f *f, int size)
 	j = -1;
 	while (++j)
 	{
-	 	ft_free(files[j]->name);
-	 	ft_free(files[j]);
+		ft_free(files[j]->name);
+		ft_free(files[j]);
 	}
 	ft_free(files);
 	return (ret);
@@ -48,7 +47,7 @@ char	**inputs(char *av[], int start, int end, t_f *f)
 	i = start;
 	valid = 0;
 	if (start > end)
-		return NULL;
+		return (NULL);
 	f->f_flag ? 0 : quicksart(av, start, end);
 	while (i <= end)
 	{

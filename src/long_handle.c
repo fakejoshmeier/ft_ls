@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/07 10:56:54 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:27:23 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 		node->info->group ? ft_printf("%*s", head->lg + 1, node->info->group) :
 		ft_printf("%*d", head->len_gn + 1, node->info->group_num);
 	}
-	node->info->size == 0 ? ft_printf(" %*d", head->len_siz, node->info->size):
+	node->info->size == 0 ? ft_printf(" %*d", head->len_siz, node->info->size) :
 		ft_printf(" %*d", head->len_siz + 1, node->info->size,
 		node->info->datestring);
 	ft_printf(" %s ", node->info->datestring);
