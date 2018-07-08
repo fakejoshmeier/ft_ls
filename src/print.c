@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 20:43:49 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 02:12:09 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print(t_node *tree, t_f *f, int size)
 	int		i;
 
 	i = -1;
-	if (f->l_flag || f->t_flag)
+	if (f->l_flag)
 	{
 		while (++i < size)
 		{
@@ -70,14 +70,13 @@ void	print(t_node *tree, t_f *f, int size)
 		i = -1;
 	}
 	if (!f->f_flag)
-		sort(tree, f, size);
+		quicksort(tree->files, 0, size - 1, f);
 	while (++i < size)
 	{
 		f->l_flag ? print_info(tree, tree->files[i], f) : 0;
 		eat_my_butt_norme(tree, f, i);
 	}
 }
-
 
 /*
 ** This is a line written for testing since the colored output comes out

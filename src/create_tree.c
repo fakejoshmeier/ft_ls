@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/07 19:03:12 by josh             ###   ########.fr       */
+/*   Updated: 2018/07/08 02:15:47 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,31 @@ void	*re(void *ptr, size_t new_size)
 	return (new);
 }
 
-t_node	*node_create(char *name, char *dir_name)
+t_node	*node_create(char *name, char *dir_name, t_f *f)
 {
 	struct stat	statbuf;
 	t_node		*node;
 	char		*new;
 
-	new = ft_strjoin(dir_name, "/");
 	node = (t_node *)ft_memalloc(sizeof(t_node));
+	new = ft_strjoin(dir_name, "/");
 	node->path = ft_strjoin(new, name);
-	!lstat(node->path, &statbuf) ? ft_error(node->path, 1) : 0;
+	lstat(node->path, &statbuf) == -1 ? ft_error(node->path, 1) : 0;
 	node->name = ft_strdup(name);
 	node->direct = S_ISDIR(statbuf.st_mode) ? 1 : 0;
 	node->sym = S_ISLNK(statbuf.st_mode) ? 1 : 0;
+	node->size = statbuf.st_size;
 	node->ll = INT_MIN;
 	node->lo = INT_MIN;
 	node->lg = INT_MIN;
 	node->len_siz = INT_MIN;
 	node->len_on = INT_MIN;
 	node->len_gn = INT_MIN;
+	node->time = (!f->c_flag && !f->u_flag) ? statbuf.st_mtime : 0;
 	if (f->c_flag)
-		node->time = stats.st_ctime;
+		node->time = statbuf.st_ctime;
 	else if (f->u_flag)
-		node->time = stats.st_atime;
-	else
-		node->time = stats.st_mtime;
+		node->time = statbuf.st_atime;
 	ft_free(new);
 	return (node);
 }
@@ -101,7 +101,7 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 			!ft_strcmp(dir->d_name, "..")))
 			continue ;
 		tree->files = (t_node **)re(tree->files, (sizeof(t_node *) * (i + 1)));
-		tree->files[i++] = node_create(dir->d_name, name);
+		tree->files[i++] = node_create(dir->d_name, name, ls);
 	}
 	print(tree, ls, i);
 	closedir(open);

@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/07 19:07:32 by josh             ###   ########.fr       */
+/*   Updated: 2018/07/07 10:56:54 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	timefill(t_i *ret, t_node *root, t_f *f)
 
 	if (f->ut_flag)
 		ret->datestring = ft_strsub(ctime(&root->time), 4, 20);
-	else if (time(NULL) - ret->time < 15552000)
+	else if (time(NULL) - (root)->time < 15552000)
 		ret->datestring = ft_strsub(ctime(&root->time), 4, 12);
 	else
 		ret->datestring = ft_strjoin(ft_strsub(ctime(&root->time), 4, 7),

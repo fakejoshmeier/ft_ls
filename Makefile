@@ -6,13 +6,13 @@
 #    By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/19 18:26:10 by jmeier            #+#    #+#              #
-#    Updated: 2018/05/22 13:24:07 by jmeier           ###   ########.fr        #
+#    Updated: 2018/07/08 00:54:17 by jmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
-FUNC = main print sort create_tree long_handle utils
+FUNC = main mult_inputs print s create_tree long_handle utils sort_utils
 
 C_LOC = src/
 C_NAM = $(addsuffix .c, $(FUNC))

@@ -3,93 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   s.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josh <jmeier@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 17:47:58 by josh              #+#    #+#             */
-/*   Updated: 2018/06/07 19:09:12 by josh             ###   ########.fr       */
+/*   Updated: 2018/07/08 00:58:41 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-void	swapper(t_node **files, int a, int b)
+void	swapper(t_node **a, t_node **b)
 {
 	t_node	*tmp;
 
-	tmp = files[a];
-	players[a] = players[b];
-	players[b] = tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
-int		partition(t_node *tree, int low, int high, t_f *f)
-{
-	t_node	*tmp;
-	int		i;
-	int		j;
-
-	tmp = tree->files[high];
-	i = low;
-	j = low - 1;
-	while (++j < high)
-	{
-		if (f->t_flag && tree->files[j]->time > tmp->time)
-			swapper(tree->files, i, j);
-//			get times for tmp and files j // perhaps put this in node
-		else if (!f->t_flag && ft_strcmp(tree->files[j]->name, tmp->name) > 0)
-			swapper(tree->files, i, j);
-		++i;
-	}
-	swapper(players, high, i);
-	return (i);
-}
-
-int		r_partition(t_node *tree, int low, int high, t_f *f)
-{
-	t_node	*tmp;
-	int		i;
-	int		j;
-
-	tmp = tree->files[high];
-	i = low;
-	j = low - 1;
-	while (++j < high)
-	{
-		if (f->t_flag && tree->files[j]->time < tmp->time)
-			swapper(tree->files, i, j);
-		else if (!f->t_flag && ft_strcmp(tree->files[j]->name, tmp->name) < 0)
-			swapper(tree->files, i, j);
-		++i;
-	}
-	swapper(players, high, i);
-	return (i);
-}
-
-void	quicksort(t_node *tree, int low, int high, t_f *f)
+void	quicksort(t_node **files, int start, int end, t_f *f)
 {
 	int		pivot;
 
-	while (low < high)
+	if (start < end)
 	{
-		pivot = f->r_flag ? r_partition(tree, low, high, f) :
-		partition(tree, low, high, f);
-		if (pivot - low < high - pivot)
-		{
-			quicksort(players, low, pivot - 1, f);
-			low = pivot + 1;
-		}
+		if (f->t_flag)
+		 	pivot = t_partition(files, start, end, f);
+		else if (f->us_flag)
+		 	pivot = s_partition(files, start, end, f);
 		else
-		{
-			quicksort(players, pivot + 1, high, f);
-			high = pivot - 1;
-		}
+		 	pivot = partition(files, start, end, f);
+		quicksort(files, start, pivot - 1, f);
+		quicksort(files, pivot + 1, end, f);
 	}
-}
-
-void	sort(t_node *tree, t_f *f)
-{
-	int		i;
-
-	i = -1;
-	while (tree->files[++i]);
-		quicksort(players, 0, i - 1, f);
 }

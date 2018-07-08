@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/07 18:58:22 by josh             ###   ########.fr       */
+/*   Updated: 2018/07/08 00:57:04 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct		s_node
 	int				lt;
 	t_i				*info;
 	time_t			time;
+	int				size;
 	int				ll;
 	int				lo;
 	int				lg;
@@ -90,7 +91,7 @@ void				*re(void *ptr, size_t new_size);
 void				ft_error(char *str, int i);
 
 void				create_tree(t_f *ls, t_node *tree, char *name);
-t_node				*node_create(char *name, char *dir_name);
+t_node				*node_create(char *name, char *dir_name, t_f *f);
 int					is_dir(const char *path);
 void				recurse(t_node *leaf, t_f *f, char *name);
 void				frito(t_node *leaf, t_f *f, int size);
@@ -98,8 +99,20 @@ void				putendl_c(char const *s, char *col, int i);
 void				free_deux(void *ptr1, void *ptr2);
 void				f_trois(void *ptr1, void *ptr2, void *ptr3);
 
-void				sort(t_node *tree, t_f *f, int size);
-void				sort_by_param(int i, t_node *tree, t_f *f);
+//void				sort(t_node *tree, t_f *f, int size);
+//void				sort_by_param(int i, t_node *tree, t_f *f);
+
+void				sort(t_node *tree, t_f *f);
+void				quicksort(t_node **files, int low, int high, t_f *f);
+int					partition(t_node **files, int low, int high, t_f *f);
+int					t_partition(t_node **files, int low, int high, t_f *f);
+int					s_partition(t_node **files, int low, int high, t_f *f);
+void				swapper(t_node **a, t_node **b);
+
+char				**inputs(char *av[], int start, int end, t_f *f);
+void				swopper(char **a, char **b);
+int					portition(char **files, int low, int high);
+void				quicksart(char *files[], int low, int high);
 
 void				print(t_node *tree, t_f *f, int size);
 void				print_info(t_node *head, t_node *node, t_f *f);
