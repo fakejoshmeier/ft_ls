@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 11:36:25 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 22:32:30 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 00:06:08 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,23 @@ void	sort_inputs(t_node **files, t_f *f, int size, int bad)
 	int		j;
 	int		d;
 
-	if (size == 0)
-		return ;
+	FUCK(size);
 	f->f_flag ? 0 : quicksort(files, 0, size - 1, f);
 	d = 0;
 	j = -1;
 	while (++j < size)
-	{
 		files[j]->direct ? d++ : ft_printf("%s\n", files[j]->name);
-		j == size - 1 && size > 1 && d > 0 && d != size ? write(1, "\n", 1) : 0;
-	}
 	j = -1;
 	while (++j < size)
 	{
 		if (files[j]->direct)
 		{
-			j == 0 ? 0 : write(1, "\n", 1);
+			j == 0 || !d ? 0 : write(1, "\n", 1);
 			if (size > 1 || (size == 1 && bad > 0))
 				files[j]->direct ? ft_printf("%s:\n", files[j]->name) : 0;
 			files[j]->direct ? create_tree(f, files[j], files[j]->name) : 0;
 		}
-		else
-			f_trois(files[j]->path, files[j]->name, files[j]);
+		OTHERWISE(f_trois(files[j]->path, files[j]->name, files[j]));
 	}
 	ft_free(files);
 }
@@ -60,7 +55,7 @@ void	inputs(char *av[], int start, int end, t_f *f)
 	{
 		new = ft_strjoin("./", av[i]);
 		if (lstat(new, &statbuf) == -1 && stat(new, &statbuf) == -1)
-			ft_printf("ft_ls: %s: No such files or directory\n", av[i]);
+			ft_printf("ft_ls: %s: No such file or directory\n", av[i]);
 		else
 		{
 			in = (t_node **)re(in, (sizeof(t_node *) * (valid + 1)));

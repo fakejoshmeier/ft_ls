@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 23:33:35 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 23:52:42 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,13 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 	ft_printf("%s %*i ", node->info->perm, head->ll, node->info->links);
 	if (f->n_flag)
 	{
-		ft_printf("%-*d ", head->len_on, node->info->owner_num);
+		ft_printf("%-*d ", head->len_on + 1, node->info->owner_num);
 		ft_printf("%-*d", head->len_gn + 1, node->info->group_num);
-//		printf("%-*d ", head->len_on + 1, node->info->owner_num);
-//		printf("%-*d\n", head->len_gn + 1, node->info->group_num);
 	}
 	else
 	{
-		node->info->owner ? ft_printf("%-*s ", head->lo + 1, node->info->owner) :
-		ft_printf("%-*d ", head->len_on + 1, node->info->owner_num);
+		node->info->owner ? ft_printf("%-*s ", head->lo + 1, node->info->owner)
+		: ft_printf("%-*d ", head->len_on + 1, node->info->owner_num);
 		node->info->group ? ft_printf("%-*s", head->lg + 1, node->info->group) :
 		ft_printf("%-*d", head->len_gn + 1, node->info->group_num);
 	}

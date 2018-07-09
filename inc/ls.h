@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 22:37:43 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 23:56:29 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MAGENTA "\033[35;1m"
 # define CYAN "\033[36;1m"
 # define WHITE "\033[37;1m"
+# define FUCK(a) if (!(a)) return ;
 
 typedef struct		s_f
 {

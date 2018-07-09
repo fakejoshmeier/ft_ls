@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:59:35 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 22:33:42 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 00:21:04 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	keep_on_trippin(char c, t_f *f)
 		f->l_flag = 1;
 	}
 	c == 'r' ? (f->r_flag = 1) : 0;
-	c == 't' ? (f->t_flag = 1) : 0;
+	c == 't' && !f->us_flag ? (f->t_flag = 1) : 0;
 	if (c == 'u')
 	{
 		f->c_flag = 0;
@@ -49,6 +49,7 @@ void	trip_flags(char c, t_f *f)
 	c == 'A' ? (f->ua_flag = 1) : 0;
 	c == 'R' ? (f->ur_flag = 1) : 0;
 	c == 'S' ? (f->us_flag = 1) : 0;
+	c == 'S' ? (f->t_flag = 0) : 0;
 	c == 'T' ? (f->ut_flag = 1) : 0;
 	c == 'a' ? (f->a_flag = 1) : 0;
 	if (c == 'c')

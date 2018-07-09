@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 23:17:43 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 23:51:23 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	print(t_node *tree, t_f *f, int size)
 			tree->lt += tree->files[i]->info->blocks;
 			lengths(tree, tree->files[i]->info);
 		}
-		printf("links length:%i\nowner length:%i\ngroup length:%i\nsize length:%i\nowner no length:%i\ngroup no length:%i\n",tree->ll, tree->lo, tree->lg, tree->len_siz, tree->len_on, tree->len_gn);
 		ft_printf("total %d\n", tree->lt);
 		i = -1;
 	}

@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 22:10:07 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 00:38:06 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,13 @@ void	recurse(t_node *leaf, t_f *f, char *name)
 	}
 }
 
-void	create_tree(t_f *ls, t_node *tree, char *name)
+void	create_tree(t_f *ls, t_node *t, char *name)
 {
-	int				i;
-	int				j;
+	int				i[2];
 	DIR				*open;
 	struct dirent	*dir;
 
-	i = 0;
+	i[0] = 0;
 	!(open = opendir(name)) ? ft_error(name, 1) : 0;
 	while ((dir = readdir(open)))
 	{
@@ -100,15 +99,16 @@ void	create_tree(t_f *ls, t_node *tree, char *name)
 		if (ls->ua_flag && (!ft_strcmp(dir->d_name, ".") ||
 			!ft_strcmp(dir->d_name, "..")))
 			continue ;
-		tree->files = (t_node **)re(tree->files, (sizeof(t_node *) * (i + 1)));
-		tree->files[i++] = node_create(dir->d_name, name, ls);
+		t->files = (t_node **)re(t->files, (sizeof(t_node *) * (i[0] + 1)));
+		t->files[i[0]++] = node_create(dir->d_name, name, ls);
 	}
-	print(tree, ls, i);
+	print(t, ls, i[0]);
 	closedir(open);
-	j = -1;
+	i[1] = -1;
 	if (ls->ur_flag)
-		while (++j < i)
-			tree->files[j]->direct ? recurse(tree->files[j], ls, name) :
-			f_trois(tree->files[j]->name, tree->files[j]->path, tree->files[j]);
-	frito(tree, ls, i);
+		while (++(i[1]) < i[0])
+			t->files[i[1]]->direct && !t->files[i[1]]->sym ?
+			recurse(t->files[i[1]], ls, name) :
+			f_trois(t->files[i[1]]->name, t->files[i[1]]->path, t->files[i[1]]);
+	frito(t, ls, i[0]);
 }
