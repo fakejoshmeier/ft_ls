@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:01:46 by jmeier            #+#    #+#             */
-/*   Updated: 2018/05/21 19:57:59 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 20:08:19 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 # include <stdlib.h>
 # define BUFF_SIZE 4096
 # define ASSERT(a) if (!(a)) return (-1);
-# define C_ASSERT(a) if (!(a)) return (NULL);
+# define NULL_GUARD(a) if (!(a)) return (NULL);
+# define MATCH(a,b) if (a) b
+# define OR(a,b) else if (a) b
+# define OTHERWISE(a) else a
 
 typedef struct		s_block
 {

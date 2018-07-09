@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 13:20:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/06/04 20:21:26 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 22:26:27 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	frito(t_node *leaf, t_f *f, int size)
 	int				i;
 
 	i = -1;
-	(void)f;
 	if (!f->ur_flag)
 		if (leaf->files)
 			while (++i < size)

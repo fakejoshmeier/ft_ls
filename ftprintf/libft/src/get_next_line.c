@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 09:34:13 by jmeier            #+#    #+#             */
-/*   Updated: 2017/10/29 20:25:09 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 20:35:18 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static t_block	*cycle_fd(t_block **train, const int fd)
 		tmp = tmp->next;
 	if (!tmp)
 	{
-		C_ASSERT(tmp = (t_block *)ft_memalloc(sizeof(t_block)));
+		NULL_GUARD(tmp = (t_block *)ft_memalloc(sizeof(t_block)));
 		tmp->fd = fd;
-		C_ASSERT(tmp->str = ft_strnew(0));
+		NULL_GUARD(tmp->str = ft_strnew(0));
 		tmp->next = *train;
 		*train = tmp;
 	}

@@ -6,7 +6,7 @@
 #    By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/19 18:26:10 by jmeier            #+#    #+#              #
-#    Updated: 2018/07/08 00:54:17 by jmeier           ###   ########.fr        #
+#    Updated: 2018/07/08 17:04:18 by jmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,19 +33,25 @@ all: $(NAME)
 
 $(NAME): $(LIB_SRC) $(O_SRC)
 	@/bin/echo -n "無駄"
-	@gcc -Wall -Werror -Wextra -g $^ -o $(NAME)
+	@gcc -Wall -Werror -Wextra $^ -o $(NAME)
 	@/bin/echo -n "ァァ！」"
 	@echo "\nそして、時は動き出す。"
 
 $(O_LOC)%.o: $(C_LOC)%.c $(HEADERS)
 	@/bin/echo -n "無駄"
-	@gcc -Wall -Werror -Wextra -g $(H_LOC) -o $@ -c $<
+	@gcc -Wall -Werror -Wextra $(H_LOC) -o $@ -c $<
 	@/bin/echo -n "無駄"
 
 $(LIB_SRC): force
 	@make -C $(LIB_LOC)
 	@echo
 	@/bin/echo -n "「無駄だ！無駄"
+
+test: $(LIB_SRC) $(O_SRC)
+	@/bin/echo -n "無駄"
+	@gcc -Wall -Werror -Wextra -g -fsanitize=address $^ -o $(NAME)
+	@/bin/echo -n "ァァ！」"
+	@echo "\nそして、時は動き出す。"
 
 force:
 	@true

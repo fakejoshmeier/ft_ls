@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:31:39 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 22:37:43 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct		s_i
 	int				blocks;
 	int				owner_num;
 	int				group_num;
-	char			*tmp;
 }					t_i;
 
 typedef struct		s_node
@@ -106,7 +105,8 @@ int					t_partition(t_node **files, int low, int high, t_f *f);
 int					s_partition(t_node **files, int low, int high, t_f *f);
 void				swapper(t_node **a, t_node **b);
 
-char				**inputs(char *av[], int start, int end, t_f *f);
+void				inputs(char *av[], int start, int end, t_f *f);
+void				sort_inputs(t_node **files, t_f *f, int size, int bad);
 void				swopper(char **a, char **b);
 int					portition(char **files, int low, int high);
 void				quicksart(char *files[], int low, int high);

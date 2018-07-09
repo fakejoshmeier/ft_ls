@@ -6,37 +6,44 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 11:36:25 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:30:31 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 22:32:30 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ls.h>
 
-char	**sort_inputs(t_node **files, t_f *f, int size)
+void	sort_inputs(t_node **files, t_f *f, int size, int bad)
 {
-	char	**ret;
-	int		i;
 	int		j;
+	int		d;
 
 	if (size == 0)
-		return (NULL);
-	ret = (char **)ft_memalloc(sizeof(char*) * size);
-	if (!f->f_flag)
-		quicksort(files, 0, size - 1, f);
-	i = -1;
-	while (++i < size)
-		ret[i] = ft_strdup(files[i]->name);
+		return ;
+	f->f_flag ? 0 : quicksort(files, 0, size - 1, f);
+	d = 0;
 	j = -1;
-	while (++j)
+	while (++j < size)
 	{
-		ft_free(files[j]->name);
-		ft_free(files[j]);
+		files[j]->direct ? d++ : ft_printf("%s\n", files[j]->name);
+		j == size - 1 && size > 1 && d > 0 && d != size ? write(1, "\n", 1) : 0;
+	}
+	j = -1;
+	while (++j < size)
+	{
+		if (files[j]->direct)
+		{
+			j == 0 ? 0 : write(1, "\n", 1);
+			if (size > 1 || (size == 1 && bad > 0))
+				files[j]->direct ? ft_printf("%s:\n", files[j]->name) : 0;
+			files[j]->direct ? create_tree(f, files[j], files[j]->name) : 0;
+		}
+		else
+			f_trois(files[j]->path, files[j]->name, files[j]);
 	}
 	ft_free(files);
-	return (ret);
 }
 
-char	**inputs(char *av[], int start, int end, t_f *f)
+void	inputs(char *av[], int start, int end, t_f *f)
 {
 	struct stat	statbuf;
 	t_node		**in;
@@ -44,15 +51,15 @@ char	**inputs(char *av[], int start, int end, t_f *f)
 	int			i;
 	int			valid;
 
+	if (start > end)
+		return ;
 	i = start;
 	valid = 0;
-	if (start > end)
-		return (NULL);
 	f->f_flag ? 0 : quicksart(av, start, end);
 	while (i <= end)
 	{
 		new = ft_strjoin("./", av[i]);
-		if (lstat(new, &statbuf) == -1)
+		if (lstat(new, &statbuf) == -1 && stat(new, &statbuf) == -1)
 			ft_printf("ft_ls: %s: No such files or directory\n", av[i]);
 		else
 		{
@@ -62,7 +69,7 @@ char	**inputs(char *av[], int start, int end, t_f *f)
 		ft_free(new);
 		i++;
 	}
-	return (sort_inputs(in, f, valid));
+	sort_inputs(in, f, valid, ((end - start) + 1 - valid));
 }
 
 void	swopper(char **a, char **b)

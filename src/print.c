@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:39:00 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:29:28 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 23:17:43 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ void	lengths(t_node *tree, t_i *ret)
 	tree->len_gn = (int)ft_numlen(ret->group_num, 10) > tree->len_gn ?
 		(int)ft_numlen(ret->group_num, 10) : tree->len_gn;
 }
+
+/*
+** This is a line written for testing since the colored output comes out
+** differently compared to the system's
+** tree->files[i]->direct ? ft_putendl(tree->files[i]->name) :
+** ft_putendl(t->files[i]->name);
+*/
 
 void	eat_my_butt_norme(t_node *t, t_f *f, int i)
 {
@@ -66,6 +73,7 @@ void	print(t_node *tree, t_f *f, int size)
 			tree->lt += tree->files[i]->info->blocks;
 			lengths(tree, tree->files[i]->info);
 		}
+		printf("links length:%i\nowner length:%i\ngroup length:%i\nsize length:%i\nowner no length:%i\ngroup no length:%i\n",tree->ll, tree->lo, tree->lg, tree->len_siz, tree->len_on, tree->len_gn);
 		ft_printf("total %d\n", tree->lt);
 		i = -1;
 	}
@@ -77,10 +85,3 @@ void	print(t_node *tree, t_f *f, int size)
 		eat_my_butt_norme(tree, f, i);
 	}
 }
-
-/*
-** This is a line written for testing since the colored output comes out
-** differently compared to the system's
-** tree->files[i]->direct ? ft_putendl(tree->files[i]->name) :
-** ft_putendl(tree->files[i]->name);
-*/
