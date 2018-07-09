@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 11:36:25 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/09 00:06:08 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 00:47:44 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	inputs(char *av[], int start, int end, t_f *f)
 {
 	struct stat	statbuf;
 	t_node		**in;
-	char		*new;
 	int			i;
 	int			valid;
 
@@ -53,15 +52,13 @@ void	inputs(char *av[], int start, int end, t_f *f)
 	f->f_flag ? 0 : quicksart(av, start, end);
 	while (i <= end)
 	{
-		new = ft_strjoin("./", av[i]);
-		if (lstat(new, &statbuf) == -1 && stat(new, &statbuf) == -1)
+		if (lstat(av[i], &statbuf) == -1 && stat(av[i], &statbuf) == -1)
 			ft_printf("ft_ls: %s: No such file or directory\n", av[i]);
 		else
 		{
 			in = (t_node **)re(in, (sizeof(t_node *) * (valid + 1)));
-			in[valid++] = node_create(av[i], ".", f);
+			in[valid++] = node_create(av[i], "", f);
 		}
-		ft_free(new);
 		i++;
 	}
 	sort_inputs(in, f, valid, ((end - start) + 1 - valid));

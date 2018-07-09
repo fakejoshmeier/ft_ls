@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:19:51 by jmeier            #+#    #+#             */
-/*   Updated: 2017/12/08 22:02:38 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 02:23:22 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int		ft_numlen(int n, int base)
 	int		len;
 	long	nb;
 
+	if (n == 0)
+		return (1);
 	len = 0;
 	nb = (long)n;
 	if (nb <= 0)

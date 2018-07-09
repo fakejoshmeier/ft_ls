@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 23:56:29 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 03:01:32 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/xattr.h>
+//# include <sys/sysmacros.h>
 # include <dirent.h>
 # include <limits.h>
 # include <grp.h>
@@ -38,6 +39,7 @@
 typedef struct		s_f
 {
 	int				ua_flag;
+	int				ug_flag;
 	int				ur_flag;
 	int				us_flag;
 	int				ut_flag;
@@ -54,7 +56,7 @@ typedef struct		s_f
 
 typedef struct		s_i
 {
-	char			*perm;
+	char			*p;
 	int				links;
 	char			*owner;
 	char			*group;
@@ -63,6 +65,9 @@ typedef struct		s_i
 	int				blocks;
 	int				owner_num;
 	int				group_num;
+	int				dev;
+	unsigned int	maj;
+	unsigned int	min;
 }					t_i;
 
 typedef struct		s_node
@@ -82,6 +87,9 @@ typedef struct		s_node
 	int				len_siz;
 	int				len_on;
 	int				len_gn;
+	int				maj_len;
+	int				min_len;
+
 }					t_node;
 
 int					main(int ac, char *av[]);

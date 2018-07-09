@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:11:50 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 02:30:51 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 03:54:32 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,56 +39,60 @@ int		partition(t_node **files, int start, int end, t_f *f)
 	return (i + 1);
 }
 
-int		t_partition(t_node **files, int start, int end, t_f *f)
+int		t_partition(t_node **f, int start, int end, t_f *fl)
 {
-	t_node	*pivot;
+	t_node	*p;
 	int		i;
 	int		j;
 
-	pivot = files[end];
+	p = f[end];
 	i = (start - 1);
 	j = start;
 	while (j < end)
 	{
-		if (f->r_flag)
+		if (fl->r_flag)
 		{
-			if (files[j]->time < pivot->time)
-				swapper(&files[++i], &files[j]);
+			if (f[j]->time == p->time && ft_strcmp(f[j]->name, p->name) > 0)
+				swapper(&f[++i], &f[j]);
+			OR(f[j]->time < p->time, swapper(&f[++i], &f[j]));
 		}
 		else
 		{
-			if (files[j]->time > pivot->time)
-				swapper(&files[++i], &files[j]);
+			if (f[j]->time == p->time && ft_strcmp(f[j]->name, p->name) < 0)
+				swapper(&f[++i], &f[j]);
+			OR(f[j]->time > p->time, swapper(&f[++i], &f[j]));
 		}
 		++j;
 	}
-	swapper(&files[i + 1], &files[end]);
+	swapper(&f[i + 1], &f[end]);
 	return (i + 1);
 }
 
-int		s_partition(t_node **files, int start, int end, t_f *f)
+int		s_partition(t_node **f, int start, int end, t_f *fl)
 {
-	t_node	*pivot;
+	t_node	*p;
 	int		i;
 	int		j;
 
-	pivot = files[end];
+	p = f[end];
 	i = (start - 1);
 	j = start;
 	while (j < end)
 	{
-		if (f->r_flag)
+		if (fl->r_flag)
 		{
-			if (files[j]->size < pivot->size)
-				swapper(&files[++i], &files[j]);
+			if (f[j]->size == p->size && ft_strcmp(f[j]->name, p->name) > 0)
+				swapper(&f[++i], &f[j]);
+			OR(f[j]->size < p->size, swapper(&f[++i], &f[j]));
 		}
 		else
 		{
-			if (files[j]->size > pivot->size)
-				swapper(&files[++i], &files[j]);
+			if (f[j]->size == p->size && ft_strcmp(f[j]->name, p->name) < 0)
+				swapper(&f[++i], &f[j]);
+			OR(f[j]->size > p->size, swapper(&f[++i], &f[j]));
 		}
 		++j;
 	}
-	swapper(&files[i + 1], &files[end]);
+	swapper(&f[i + 1], &f[end]);
 	return (i + 1);
 }

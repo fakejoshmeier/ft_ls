@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 18:07:01 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 23:52:42 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 03:27:01 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,36 +52,36 @@ void	timefill(t_i *ret, t_node *root, t_f *f)
 
 t_i		*find_info(t_node *tree, int i, t_f *f)
 {
-	struct stat		stats;
+	struct stat		s;
 	struct passwd	*pwd;
 	struct group	*grp;
-	t_i				*ret;
+	t_i				*r;
 
-	ret = (t_i *)ft_memalloc(sizeof(t_i));
-	NULL_GUARD(lstat(tree->files[i]->path, &stats) == 0);
-	pwd = getpwuid(stats.st_uid);
-	grp = getgrgid(stats.st_gid);
-	timefill(ret, tree->files[i], f);
-	ret->perm = fill_perm(stats, tree->files[i]->path);
-	if (stats.st_mode & S_ISUID)
-		ret->perm[3] = (stats.st_mode & S_IXUSR) ? 's' : 'S';
-	if (stats.st_mode & S_ISGID)
-		ret->perm[6] = (stats.st_mode & S_IXGRP) ? 'S' : 'l';
-	if (stats.st_mode & S_ISVTX)
-		ret->perm[9] = (stats.st_mode & S_IXOTH) ? 't' : 'T';
-	ret->links = stats.st_nlink;
-	ret->owner = (pwd) ? ft_strdup(pwd->pw_name) : NULL;
-	ret->group = (grp) ? ft_strdup(grp->gr_name) : NULL;
-	ret->size = stats.st_size;
-	ret->blocks = stats.st_blocks;
-	ret->owner_num = (int)stats.st_uid;
-	ret->group_num = (int)stats.st_gid;
-	return (ret);
+	r = (t_i *)ft_memalloc(sizeof(t_i));
+	NULL_GUARD(lstat(tree->files[i]->path, &s) == 0);
+	pwd = getpwuid(s.st_uid);
+	grp = getgrgid(s.st_gid);
+	timefill(r, tree->files[i], f);
+	r->p = fill_perm(s, tree->files[i]->path);
+	MATCH(s.st_mode & S_ISUID, r->p[3] = (s.st_mode & S_IXUSR) ? 's' : 'S');
+	MATCH(s.st_mode & S_ISGID, r->p[6] = (s.st_mode & S_IXGRP) ? 'S' : 'l');
+	MATCH(s.st_mode & S_ISVTX, r->p[9] = (s.st_mode & S_IXOTH) ? 't' : 'T');
+	r->links = s.st_nlink;
+	r->owner = (pwd) ? ft_strdup(pwd->pw_name) : NULL;
+	r->group = (grp) ? ft_strdup(grp->gr_name) : NULL;
+	r->size = s.st_size;
+	r->blocks = s.st_blocks;
+	r->owner_num = (int)s.st_uid;
+	r->group_num = (int)s.st_gid;
+	MATCH(S_ISCHR(s.st_mode), r->dev = 1);
+	MATCH(r->dev, r->maj = major(s.st_rdev));
+	MATCH(r->dev, r->min = minor(s.st_rdev));
+	return (r);
 }
 
 void	print_info(t_node *head, t_node *node, t_f *f)
 {
-	ft_printf("%s %*i ", node->info->perm, head->ll, node->info->links);
+	ft_printf("%s %*i ", node->info->p, head->ll, node->info->links);
 	if (f->n_flag)
 	{
 		ft_printf("%-*d ", head->len_on + 1, node->info->owner_num);
@@ -94,10 +94,13 @@ void	print_info(t_node *head, t_node *node, t_f *f)
 		node->info->group ? ft_printf("%-*s", head->lg + 1, node->info->group) :
 		ft_printf("%-*d", head->len_gn + 1, node->info->group_num);
 	}
-	node->info->size == 0 ? ft_printf("%*d", head->len_siz, node->info->size) :
-		ft_printf("%*d", head->len_siz + 1, node->info->size);
+	if (node->info->dev)
+		ft_printf(" %*d, %*d", head->maj_len + 1, node->info->maj,
+		head->min_len, node->info->min);
+	OTHERWISE(ft_printf("%*d", (!head->maj_len && !head->min_len ?
+	head->len_siz + 1 : head->maj_len + head->min_len + 4), node->info->size));
 	ft_printf(" %s ", node->info->datestring);
-	ft_free(node->info->perm);
+	ft_free(node->info->p);
 	ft_free(node->info->datestring);
 	ft_free(node->info->owner);
 	ft_free(node->info->group);
