@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 19:51:39 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/09 00:38:06 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/09 04:13:19 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ t_node	*node_create(char *name, char *dir_name, t_f *f)
 	char		*new;
 
 	node = (t_node *)ft_memalloc(sizeof(t_node));
-	new = ft_strjoin(dir_name, "/");
-	node->path = ft_strjoin(new, name);
+	MATCH(ft_strcmp(dir_name, "") == 0, new = NULL);
+	OTHERWISE(new = ft_strjoin(dir_name, "/"));
+	node->path = new != NULL ? ft_strjoin(new, name) : ft_strdup(name);
 	lstat(node->path, &statbuf) == -1 ? ft_error(node->path, 1) : 0;
 	node->name = ft_strdup(name);
 	node->direct = S_ISDIR(statbuf.st_mode) ? 1 : 0;
@@ -48,11 +49,9 @@ t_node	*node_create(char *name, char *dir_name, t_f *f)
 	node->len_on = INT_MIN;
 	node->len_gn = INT_MIN;
 	node->time = (!f->c_flag && !f->u_flag) ? statbuf.st_mtime : 0;
-	if (f->c_flag)
-		node->time = statbuf.st_ctime;
-	else if (f->u_flag)
-		node->time = statbuf.st_atime;
-	ft_free(new);
+	MATCH(f->c_flag, node->time = statbuf.st_ctime);
+	OR(f->u_flag, node->time = statbuf.st_atime);
+	MATCH(new, ft_free(new));
 	return (node);
 }
 
