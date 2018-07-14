@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 22:22:28 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 01:25:18 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/08 00:11:10 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	ft_freearr(char **array)
 		array[i] = NULL;
 	}
 	free(array);
+	array = NULL;
 }

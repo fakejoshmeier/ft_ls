@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 13:40:27 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/09 03:01:32 by jmeier           ###   ########.fr       */
+/*   Updated: 2018/07/14 16:16:21 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/xattr.h>
-//# include <sys/sysmacros.h>
 # include <dirent.h>
 # include <limits.h>
 # include <grp.h>

@@ -6,7 +6,7 @@
 /*   By: jmeier <jmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 05:10:43 by jmeier            #+#    #+#             */
-/*   Updated: 2018/07/08 23:50:00 by jmeier           ###   ########.fr       */
+/*   Updated: 2017/12/12 20:56:28 by jmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ char	*sign_width_parse(long long output, t_all *f)
 	if (f->wid_flag == 0)
 		return (NULL);
 	g = ft_longlonglen(output, 10);
-	if (output == 0)
-		g = 1;
 	i = g > f->prec ? g : f->prec;
 	if ((f->spess == 1 && output >= 0) || (f->plus == 1 && output >= 0)
 		|| output < 0)
@@ -47,8 +45,6 @@ char	*width_parse(unsigned long long output, t_all *f, int base)
 	if (f->wid_flag == 0)
 		return (NULL);
 	i = ft_ulonglonglen(output, base);
-	if (i == 0)
-		i = 1;
 	i += f->hash == 1 ? 1 : 0;
 	i += f->hash == 1 && base == 16 ? 1 : 0;
 	len = f->width > i ? f->width - i : 0;
