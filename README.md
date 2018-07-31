@@ -5,7 +5,7 @@ The goal of this project is to recode some of MacOS's ls command functionality. 
 
 `-R` - Recursively list subdirectories encountered.
 
-`-a` - Include all entries whose names begin with a '.'.
+`-a` - Include all entries whose names begin with a ' . '.
 
 `-l` - List in long format.
 
@@ -17,7 +17,7 @@ Note that the output mimics the output of `ls -1`, where instead of being spaced
 
 Extra functionality added in includes:
 
-`-A` - Include all entries whose names begin with a '.', excluding the "." and ".." directories.
+`-A` - Include all entries whose names begin with a ' . ', excluding the "." and ".." directories.
 
 `-G` - Prints with colors
 
